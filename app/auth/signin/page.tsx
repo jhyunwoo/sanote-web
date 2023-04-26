@@ -25,7 +25,6 @@ export default function SignIn() {
     const authData = await pb
       .collection("users")
       .authWithPassword(data.email, data.password)
-    console.log(authData?.record)
     setUser({
       avatar: authData?.record?.avatar,
       class: authData?.record?.class,
@@ -43,11 +42,17 @@ export default function SignIn() {
       verified: authData?.record?.verified,
       year: authData?.record?.year,
     })
-    router.replace("/")
+    if (authData.record.isTeacher) {
+      router.replace("/teachers")
+    } else {
+      router.replace("/")
+    }
   }
 
   useEffect(() => {
-    if (pb.authStore.model?.id) {
+    if (pb.authStore.model?.isTeacher) {
+      router.replace("/teachers")
+    } else if (pb.authStore.model?.id) {
       router.replace("/")
     }
   }, [])

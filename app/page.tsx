@@ -1,10 +1,10 @@
 "use client"
 
-import ProtectedPage from "./ProtectedPage"
+import ProtectedPage from "./components/ProtectedPage"
 import pb from "@/lib/pocketbase"
 import { useResetRecoilState } from "recoil"
 import { userInfo } from "@/lib/recoil"
-import PushNoti from "./PushNoti"
+import PushNoti from "./components/PushNoti"
 
 export default function Home() {
   const resetUserInfo = useResetRecoilState(userInfo)

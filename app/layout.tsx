@@ -1,5 +1,5 @@
 import "./globals.css"
-import Recoil from "./Recoil"
+import Recoil from "./components/Recoil"
 
 export const metadata = {
   title: "Sanote",
