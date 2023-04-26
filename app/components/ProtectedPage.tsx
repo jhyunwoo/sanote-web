@@ -36,6 +36,8 @@ export default function ProtectedPage() {
       router.replace("/auth/signin")
     } else if (!pb.authStore.model?.verified) {
       router.replace("/auth/confirm-verification")
+    } else if (pb.authStore.model.isTeacher) {
+      router.replace("/teachers")
     }
   }, [user])
   return <></>
