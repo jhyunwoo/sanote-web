@@ -1,4 +1,5 @@
 import "./globals.css"
+import Recoil from "./Recoil"
 
 export const metadata = {
   title: "Sanote",
@@ -234,8 +235,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="kr">
+      <body>
+        <Recoil>{children}</Recoil>
+      </body>
     </html>
   )
 }

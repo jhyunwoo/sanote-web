@@ -16,7 +16,6 @@ export default function SignUp() {
   const {
     register,
     handleSubmit,
-    watch,
     setValue,
     formState: { errors },
   } = useForm<Inputs>()
@@ -62,6 +61,7 @@ export default function SignUp() {
             type="password"
             {...register("password", {
               required: { value: true, message: "비밀번호를 입력하세요." },
+              minLength: { value: 8, message: "비밀번호는 8자리 이상입니다." },
             })}
           />
           {errors?.password ? <p>{errors?.password?.message}</p> : ""}
@@ -70,6 +70,7 @@ export default function SignUp() {
             type="password"
             {...register("passwordConfirm", {
               required: { value: true, message: "비밀번호를 입력하세요." },
+              minLength: { value: 8, message: "비밀번호는 8자리 이상입니다." },
             })}
           />
           {errors?.passwordConfirm ? (
