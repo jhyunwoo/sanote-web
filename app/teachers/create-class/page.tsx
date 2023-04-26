@@ -1,4 +1,5 @@
 "use client"
+
 import pb from "@/lib/pocketbase"
 import { useRouter } from "next/navigation"
 import { useForm, SubmitHandler } from "react-hook-form"
@@ -19,11 +20,11 @@ export default function CreateClass() {
   } = useForm<Inputs>()
   const router = useRouter()
 
-  const onChangeYear = register("semester", {
+  register("semester", {
     required: { value: true, message: "학기를 선택하세요." },
-  }).onChange
+  })
 
-  async function onSubmit(data: Inputs) {
+  const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     const classData = {
       name: data.name,
       pac: Number(data.pac),
@@ -31,7 +32,6 @@ export default function CreateClass() {
       semister: Number(data.semester),
       owner: pb.authStore.model?.id,
     }
-
     await pb.collection("classes").create(classData)
     router.replace("/teachers")
   }
@@ -47,6 +47,7 @@ export default function CreateClass() {
               required: { value: true, message: "수업 이름을 작성해주세요." },
             })}
           />
+          {errors?.name ? <p>{errors.name?.message}</p> : ""}
           <div>PAC</div>
           <input
             type="number"
@@ -55,6 +56,7 @@ export default function CreateClass() {
               min: { value: 1, message: "올바른 팩을 입력하세요." },
             })}
           />
+          {errors?.pac ? <p>{errors.pac?.message}</p> : ""}
           <div>개설 연도</div>
           <input
             type="number"
@@ -67,6 +69,7 @@ export default function CreateClass() {
               max: { value: 2050, message: "올바른 연도를 입력해주세요." },
             })}
           />
+          {errors?.year ? <p>{errors.year?.message}</p> : ""}
           <div>학기</div>
           <div>
             <button type="button" onClick={() => setValue("semester", 1)}>
@@ -76,6 +79,7 @@ export default function CreateClass() {
               2학기
             </button>
           </div>
+          {errors?.semester ? <p>{errors.semester?.message}</p> : ""}
           <button type="submit">제출</button>
         </form>
       </div>
