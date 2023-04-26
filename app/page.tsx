@@ -7,10 +7,12 @@ import { userInfo } from "@/lib/recoil"
 
 export default function Home() {
   const resetUserInfo = useResetRecoilState(userInfo)
+
   function userSignOut() {
     pb.authStore.clear()
     resetUserInfo()
   }
+
   return (
     <div>
       <ProtectedPage />

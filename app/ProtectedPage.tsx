@@ -9,9 +9,10 @@ export default function ProtectedPage() {
   const user = useRecoilValue(userInfo)
   const router = useRouter()
   useEffect(() => {
-    console.log(user)
-    if (!user) {
+    if (!user?.id) {
       router.replace("/auth/signin")
+    } else if (!user.verified) {
+      router.replace("/auth/confirm-verification")
     }
   }, [user])
   return <></>
