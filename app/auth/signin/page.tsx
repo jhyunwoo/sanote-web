@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import { userInfo } from "@/lib/recoil"
 import { useRecoilState } from "recoil"
 import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 type Inputs = {
   email: string
@@ -45,6 +46,12 @@ export default function SignIn() {
     router.replace("/")
   }
 
+  useEffect(() => {
+    if (pb.authStore.model?.id) {
+      router.replace("/")
+    }
+  }, [])
+
   return (
     <div>
       <div>Sign In</div>
@@ -67,7 +74,6 @@ export default function SignIn() {
           {errors?.password ? <p>{errors?.password?.message}</p> : ""}
           <button type="submit">로그인</button>
         </form>
-        <button onClick={() => console.log(user)}>사용자 정보</button>
       </div>
     </div>
   )
