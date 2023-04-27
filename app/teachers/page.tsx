@@ -47,6 +47,12 @@ export default function Teachers() {
       getClassList(`semister=${semister}`)
     } else if (year && semister) {
       getClassList(`year=${year}&&semister=${semister}`)
+    } else if (!year && !semister) {
+      getClassList(
+        `year=${date.getFullYear()}&&semister=${checkSemister(
+          date.getMonth(),
+        )}`,
+      )
     }
   }, [year, semister])
 
@@ -55,19 +61,48 @@ export default function Teachers() {
       <div>Teacher Page</div>
       <Link href={"/teachers/create-class"}>Create Class</Link>
       <div className="flex justify-around w-full">
-        <button onClick={() => setYear(date.getFullYear() - 1)}>
+        <button
+          className={`p-2  text-white text-center rounded-lg px-4 ${
+            year === date.getFullYear() - 1 ? "bg-orange-700" : "bg-orange-500"
+          }`}
+          onClick={() => setYear(date.getFullYear() - 1)}
+        >
           {date.getFullYear() - 1}
         </button>
-        <button onClick={() => setYear(date.getFullYear())}>
+        <button
+          className={`p-2  text-white text-center rounded-lg px-4 ${
+            year === date.getFullYear() ? "bg-orange-700" : "bg-orange-500"
+          }`}
+          onClick={() => setYear(date.getFullYear())}
+        >
           {date.getFullYear()}
         </button>
-        <button onClick={() => setYear(date.getFullYear() + 1)}>
+        <button
+          className={`p-2  text-white text-center rounded-lg px-4 ${
+            year === date.getFullYear() + 1 ? "bg-orange-700" : "bg-orange-500"
+          }`}
+          onClick={() => setYear(date.getFullYear() + 1)}
+        >
           {date.getFullYear() + 1}
         </button>
       </div>
-      <div>
-        <button onClick={() => setSemister(1)}>1학기</button>
-        <button onClick={() => setSemister(2)}>2학기</button>
+      <div className="flex justify-around m-4">
+        <button
+          className={`p-2 px-4 rounded-lg text-white ${
+            semister === 1 ? "bg-orange-700" : "bg-orange-500"
+          }`}
+          onClick={() => setSemister(1)}
+        >
+          1학기
+        </button>
+        <button
+          className={`p-2 px-4 rounded-lg text-white ${
+            semister === 2 ? "bg-orange-700" : "bg-orange-500"
+          }`}
+          onClick={() => setSemister(2)}
+        >
+          2학기
+        </button>
       </div>
       <div>
         {classes.map((data, key) => (
