@@ -74,7 +74,7 @@ export default function Teachers() {
           <Link key={key} href={`/teachers/class/${data.id}`}>
             <div className="bg-slate-50 p-4 m-2 rounded-xl flex flex-col">
               <div>
-                {data.name} ({year} {semister}학기)
+                {data.name} ({data.year} {data.semister}학기)
               </div>
               <div>{data.pac}팩</div>
               <div>{data?.students?.length}명</div>
