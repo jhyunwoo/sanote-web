@@ -27,6 +27,7 @@ export async function POST(request: Request) {
           new Buffer(JSON.stringify("hello"), "utf8"),
         )
         .catch(e => console.log(e))
+      console.log(result)
     }
   })
   // const list = await pb.collection("pushInfos").getFullList()
