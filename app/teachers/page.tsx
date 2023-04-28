@@ -59,7 +59,15 @@ export default function Teachers() {
   return (
     <div>
       <div>Teacher Page</div>
-      <Link href={"/teachers/create-class"}>Create Class</Link>
+      <div className="flex w-full">
+        <Link
+          href={"/teachers/create-class"}
+          className={"p-4 m-2 rounded-lg bg-yellow-400 text-white"}
+        >
+          Create Class
+        </Link>
+        <Link href={"/teachers/send-note"}>Send Note</Link>
+      </div>
       <div className="flex justify-around w-full">
         <button
           className={`p-2  text-white text-center rounded-lg px-4 ${
