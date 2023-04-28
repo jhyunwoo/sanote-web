@@ -1,16 +1,36 @@
+import pb from "@/lib/pocketbase"
 import { NextResponse } from "next/server"
 import webpush from "web-push"
 
-import { headers } from "next/headers"
-
 export async function POST(request: Request) {
-  //   webpush.setVapidDetails(
-  //     "mailto:jhyunwoo0228@gmail.com",
-  //     process.env.PUSH_PUBLIC_KEY,
-  //     process.env.PUSH_PRIVATE_KEY,
-  //   )
-  const res = await request.json()
+  webpush.setVapidDetails(
+    "mailto:jhyunwoo0228@gmail.com",
+    "BCVNyyitZCQORywJsVmjfM4nd1Ptr4t9wbiYS4oUADsw79qKnL7mzezHbgQLXqnBbICpL8ayuLO5WH2wDwyXkIE",
+    "eHZEE5_HN6ccCv2xUotmnkMmjmMZNEUjviHvB3exLyQ",
+  )
+  const userList = await request.json()
+  let pushList: any[] = []
+  userList.map(async (data: any) => {
+    const records = await pb.collection("pushInfos").getFullList({
+      filter: `user.id="${data.id}"`,
+    })
+    for (let i = 0; i < records.length; i++) {
+      const result = webpush
+        .sendNotification(
+          {
+            endpoint: records[i].endpoint,
+            keys: {
+              p256dh: records[i].p256dh,
+              auth: records[i].auth,
+            },
+          },
+          new Buffer(JSON.stringify("hello"), "utf8"),
+        )
+        .catch(e => console.log(e))
+    }
+  })
+  // const list = await pb.collection("pushInfos").getFullList()
+  // console.log(list)
 
-  console.log(res)
   return NextResponse.json("hello")
 }

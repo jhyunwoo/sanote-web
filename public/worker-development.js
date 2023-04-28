@@ -15,7 +15,7 @@
   \*************************/
 /***/ (() => {
 
-eval("self.__WB_DISABLE_DEV_LOGS = true;\nself.addEventListener(\"push\", (event)=>{\n    const title = event.data.text();\n    EventCounts.waitUntil(self.ServiceWorkerRegistration.showNotification(title));\n});\n\n\n//# sourceURL=webpack://sanote-web/./worker/index.js?");
+eval("self.__WB_DISABLE_DEV_LOGS = true;\nself.addEventListener(\"push\", (event)=>{\n    const title = event.data.text();\n    event.waitUntil(self.ServiceWorkerRegistration.showNotification(title));\n});\n\n\n//# sourceURL=webpack://sanote-web/./worker/index.js?");
 
 /***/ })
 
