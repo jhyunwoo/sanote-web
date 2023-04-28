@@ -24,7 +24,7 @@ export async function POST(request: Request) {
               auth: records[i].auth,
             },
           },
-          new Buffer(JSON.stringify("hello"), "utf8"),
+          "hellos",
         )
         .catch(e => console.log(e))
       console.log(result)

@@ -3,10 +3,13 @@
 import pb from "@/lib/pocketbase"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { useResetRecoilState } from "recoil"
+import { userInfo } from "@/lib/recoil"
 
 type ClassListType = any
 
 export default function Teachers() {
+  const resetUserInfo = useResetRecoilState(userInfo)
   const date = new Date()
   const [year, setYear] = useState<Number>()
   const [semister, setSemister] = useState<Number>()
@@ -18,6 +21,11 @@ export default function Teachers() {
     } else {
       return 2
     }
+  }
+
+  function userSignOut() {
+    pb.authStore.clear()
+    resetUserInfo()
   }
 
   useEffect(() => {
@@ -67,6 +75,7 @@ export default function Teachers() {
           Create Class
         </Link>
         <Link href={"/teachers/send-note"}>Send Note</Link>
+        <button onClick={userSignOut}>Sign Out</button>
       </div>
       <div className="flex justify-around w-full">
         <button
