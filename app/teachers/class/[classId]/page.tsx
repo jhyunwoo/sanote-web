@@ -41,7 +41,7 @@ export default function ClassDetail() {
   useEffect(() => {
     async function getClassDetail() {
       const record = await pb.collection("classes").getOne(params.classId, {
-        expand: "students,owner",
+        expand: "owner,students",
       })
       console.log(record)
       setClassInfo({
@@ -65,8 +65,8 @@ export default function ClassDetail() {
     <div>
       <div>Class Detail</div>
       <div>{classInfo?.name}</div>
-      <div>{classInfo?.pac}</div>
-      <div>{classInfo?.owner?.name}</div>
+      <div>{classInfo?.pac}팩</div>
+      <div>{classInfo?.owner?.name} 선생님</div>
       <div>학생</div>
       {classInfo?.students?.map((data: any, key: number) => (
         <div key={key}>
