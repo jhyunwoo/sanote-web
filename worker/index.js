@@ -1,6 +1,32 @@
 self.__WB_DISABLE_DEV_LOGS = true
 
-self.addEventListener("push", event => {
-  const title = event.data.text()
-  event.waitUntil(self.ServiceWorkerRegistration.showNotification(title))
+self.addEventListener("push", function (event) {
+  const data = JSON.parse(event.data?.text() ?? '{ title: "" }')
+  event.waitUntil(
+    self.registration.showNotification(data.title, {
+      body: data.message,
+    }),
+  )
 })
+
+self.addEventListener("notificationclick", function (event) {
+  event.notification.close()
+  event.waitUntil(
+    self.clients
+      .matchAll({ type: "window", includeUncontrolled: true })
+      .then(function (clientList) {
+        if (clientList.length > 0) {
+          let client = clientList[0]
+          for (let i = 0; i < clientList.length; i++) {
+            if (clientList[i].focused) {
+              client = clientList[i]
+            }
+          }
+          return client.focus()
+        }
+        return self.clients.openWindow("/")
+      }),
+  )
+})
+
+export {}

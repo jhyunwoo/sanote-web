@@ -1,13 +1,22 @@
 import pb from "@/lib/pocketbase"
 import { NextResponse } from "next/server"
-import webpush from "web-push"
+import webPush from "web-push"
 
 export async function POST(request: Request) {
-  webpush.setVapidDetails(
-    "mailto:jhyunwoo0228@gmail.com",
-    "BCVNyyitZCQORywJsVmjfM4nd1Ptr4t9wbiYS4oUADsw79qKnL7mzezHbgQLXqnBbICpL8ayuLO5WH2wDwyXkIE",
-    "eHZEE5_HN6ccCv2xUotmnkMmjmMZNEUjviHvB3exLyQ",
+  if (
+    !process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY ||
+    !process.env.WEB_PUSH_EMAIL ||
+    !process.env.WEB_PUSH_PRIVATE_KEY
+  ) {
+    throw new Error("Environment variables supplied not sufficient.")
+  }
+  webPush.setVapidDetails(
+    `mailto:${process.env.WEB_PUSH_EMAIL}`,
+    process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY,
+    process.env.WEB_PUSH_PRIVATE_KEY,
   )
+  webPush.setGCMAPIKey("1073585647206")
+
   const userList = await request.json()
   let pushList: any[] = []
   userList.map(async (data: any) => {
@@ -15,7 +24,7 @@ export async function POST(request: Request) {
       filter: `user.id="${data.id}"`,
     })
     for (let i = 0; i < records.length; i++) {
-      const result = webpush
+      webPush
         .sendNotification(
           {
             endpoint: records[i].endpoint,
@@ -24,14 +33,17 @@ export async function POST(request: Request) {
               auth: records[i].auth,
             },
           },
-          "hellos",
+          new Buffer(
+            JSON.stringify({
+              title: "안녕하세요",
+              message: "메세지 전송 테스트",
+              tag: "message-tag",
+            }),
+          ),
         )
         .catch(e => console.log(e))
-      console.log(result)
     }
   })
-  // const list = await pb.collection("pushInfos").getFullList()
-  // console.log(list)
 
   return NextResponse.json("hello")
 }
