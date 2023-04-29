@@ -11,6 +11,8 @@
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
+    "airbnb",
+    "airbnb-typescript",
     "next/core-web-vitals"
   ],
   "rules": {
