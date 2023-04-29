@@ -84,7 +84,7 @@ export default function SendNote() {
 
   async function sendNote() {
     console.log(sender)
-    await axios.post("/api/send-push", sender)
+    await axios.post("/api/send-push", {userInfo:sender, message:"hello"})
   }
 
   return (
