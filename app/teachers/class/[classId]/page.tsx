@@ -38,10 +38,10 @@ export default function ClassDetail() {
         updateList.push(data.id)
       })
     }
-    if (params?.classId) {
+    if (typeof params?.classId === "string") {
       const record = await pb
         .collection("classes")
-        .update(params.classId[0], { students: updateList })
+        .update(params.classId, { students: updateList })
       setClassInfo({
         collectionId: classInfo?.collectionId,
         collectionName: classInfo?.collectionName,
@@ -61,12 +61,10 @@ export default function ClassDetail() {
 
   useEffect(() => {
     async function getClassDetail() {
-      if (params) {
-        const record = await pb
-          .collection("classes")
-          .getOne(params.classId[0], {
-            expand: "students,owner",
-          })
+      if (typeof params?.classId === "string") {
+        const record = await pb.collection("classes").getOne(params.classId, {
+          expand: "students,owner",
+        })
         console.log(record)
         setClassInfo({
           collectionId: record.collectionId,
