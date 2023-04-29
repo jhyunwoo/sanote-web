@@ -1,10 +1,11 @@
 self.__WB_DISABLE_DEV_LOGS = true
 
 self.addEventListener("push", function (event) {
-  const data = JSON.parse(event.data?.text() ?? '{ title: "" }')
+  const data = JSON.parse(event.data?.text() ?? { title: "" })
   event.waitUntil(
     self.registration.showNotification(data.title, {
       body: data.message,
+      icon: "/images/icons/icon-192x192.png",
     }),
   )
 })

@@ -4,8 +4,13 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import { useState } from "react"
 import axios from "axios"
 
-type Inputs = {
+type SearchType = {
   search: string
+}
+
+type PushType = {
+  title: string
+  message: string
 }
 
 type Any = any
@@ -23,12 +28,18 @@ export default function SendNote() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>()
+  } = useForm<SearchType>()
+
+  const {
+    register: register2,
+    handleSubmit: handleSubmit2,
+    formState: { errors: errors2 },
+  } = useForm<PushType>()
 
   const [searchResult, setSearchResult] = useState<Any[]>([])
   const [sender, setSender] = useState<SenderType[]>([])
 
-  const onSubmit: SubmitHandler<Inputs> = async data => {
+  const onSubmit: SubmitHandler<SearchType> = async data => {
     try {
       parseInt(data.search)
       const record = await pb.collection("users").getFullList({
@@ -40,6 +51,18 @@ export default function SendNote() {
         filter: `name~"${data.search}"`,
       })
       setSearchResult(record)
+    }
+  }
+
+  const sendPush: SubmitHandler<PushType> = async data => {
+    if (sender.length > 0) {
+      console.log(data)
+      await axios.post("/api/send-push", {
+        userInfo: sender,
+        push: { title: data.title, message: data.message },
+      })
+    } else {
+      alert("보낼 사람을 선택하세요")
     }
   }
 
@@ -84,7 +107,7 @@ export default function SendNote() {
 
   async function sendNote() {
     console.log(sender)
-    await axios.post("/api/send-push", {userInfo:sender, message:"hello"})
+    await axios.post("/api/send-push", { userInfo: sender, message: "hello" })
   }
 
   return (
@@ -93,7 +116,7 @@ export default function SendNote() {
       <div>
         <div>Search</div>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <input {...register("search", { required: true })} />
+          <input {...register("search")} />
           <button type="submit">검색</button>
         </form>
       </div>
@@ -121,7 +144,12 @@ export default function SendNote() {
           </div>
         ))}
       </div>
-      <button onClick={sendNote}>쪽지 전송</button>
+      <form onSubmit={handleSubmit2(sendPush)}>
+        <input {...register2("title", { required: true })} />
+        <input {...register2("message", { required: true })} />
+        <button type="submit">전송</button>
+      </form>
+      {/* <button onClick={sendNote}>쪽지 전송</button> */}
     </div>
   )
 }

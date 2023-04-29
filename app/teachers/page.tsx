@@ -67,6 +67,7 @@ export default function Teachers() {
   return (
     <div>
       <div>Teacher Page</div>
+      <button onClick={userSignOut}>Sign Out</button>
       <div className="flex w-full">
         <Link
           href={"/teachers/create-class"}
@@ -74,8 +75,12 @@ export default function Teachers() {
         >
           Create Class
         </Link>
-        <Link href={"/teachers/send-note"}>Send Note</Link>
-        <button onClick={userSignOut}>Sign Out</button>
+        <Link
+          href={"/teachers/send-note"}
+          className={"p-4 m-2 rounded-lg bg-yellow-400 text-white"}
+        >
+          Send Note
+        </Link>
       </div>
       <div className="flex justify-around w-full">
         <button
