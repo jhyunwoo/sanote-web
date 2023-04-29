@@ -18,7 +18,7 @@ export async function POST(request: Request) {
   webPush.setGCMAPIKey("1073585647206")
 
   const userList = await request.json()
-  let pushList: any[] = []
+  const pushList: any[] = []
   userList.map(async (data: any) => {
     const records = await pb.collection("pushInfos").getFullList({
       filter: `user.id="${data.id}"`,
@@ -33,13 +33,12 @@ export async function POST(request: Request) {
               auth: records[i].auth,
             },
           },
-          new Buffer(
-            JSON.stringify({
-              title: "안녕하세요",
-              message: "메세지 전송 테스트",
-              tag: "message-tag",
-            }),
-          ),
+
+          Buffer.from(JSON.stringify({
+            title: "안녕하세요",
+            message: "메세지 전송 테스트",
+            tag: "message-tag",
+          }))
         )
         .catch(e => console.log(e))
     }
