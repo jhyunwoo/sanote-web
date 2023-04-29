@@ -11,7 +11,9 @@ export default function ConfirmVerification() {
   const user = useRecoilValue(userInfo)
 
   async function verification() {
-    await pb.collection("users").confirmVerification(params.token)
+    if(params){
+      await pb.collection("users").confirmVerification(params.token[0])
+    }
   }
 
   return (
