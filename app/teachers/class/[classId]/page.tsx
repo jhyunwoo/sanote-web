@@ -38,47 +38,51 @@ export default function ClassDetail() {
         updateList.push(data.id)
       })
     }
-    if(params?.classId){
+    if (params?.classId) {
       const record = await pb
-      .collection("classes")
-      .update(params.classId[0], { students: updateList })
-    setClassInfo({
-      collectionId: classInfo?.collectionId,
-      collectionName: classInfo?.collectionName,
-      created: classInfo?.created,
-      expand: classInfo?.expand,
-      id: classInfo?.id,
-      name: classInfo?.name,
-      owner: classInfo?.owner,
-      pac: classInfo?.pac,
-      semister: classInfo?.semister,
-      students: newStudentList,
-      updated: classInfo?.updated,
-      year: classInfo?.year,
-    })
+        .collection("classes")
+        .update(params.classId[0], { students: updateList })
+      setClassInfo({
+        collectionId: classInfo?.collectionId,
+        collectionName: classInfo?.collectionName,
+        created: classInfo?.created,
+        expand: classInfo?.expand,
+        id: classInfo?.id,
+        name: classInfo?.name,
+        owner: classInfo?.owner,
+        pac: classInfo?.pac,
+        semister: classInfo?.semister,
+        students: newStudentList,
+        updated: classInfo?.updated,
+        year: classInfo?.year,
+      })
     }
   }
 
   useEffect(() => {
     async function getClassDetail() {
-      const record = await pb.collection("classes").getOne(params.classId, {
-        expand: "students,owner",
-      })
-      console.log(record)
-      setClassInfo({
-        collectionId: record.collectionId,
-        collectionName: record.collectionName,
-        created: record.created,
-        expand: record.expand,
-        id: record.id,
-        name: record.name,
-        owner: record.expand.owner,
-        pac: record.pac,
-        semister: record.semister,
-        students: record?.expand?.students,
-        updated: record.updated,
-        year: record.year,
-      })
+      if (params) {
+        const record = await pb
+          .collection("classes")
+          .getOne(params.classId[0], {
+            expand: "students,owner",
+          })
+        console.log(record)
+        setClassInfo({
+          collectionId: record.collectionId,
+          collectionName: record.collectionName,
+          created: record.created,
+          expand: record.expand,
+          id: record.id,
+          name: record.name,
+          owner: record.expand.owner,
+          pac: record.pac,
+          semister: record.semister,
+          students: record?.expand?.students,
+          updated: record.updated,
+          year: record.year,
+        })
+      }
     }
     getClassDetail()
   }, [])
