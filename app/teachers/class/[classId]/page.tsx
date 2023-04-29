@@ -38,9 +38,10 @@ export default function ClassDetail() {
         updateList.push(data.id)
       })
     }
-    const record = await pb
+    if(params?.classId){
+      const record = await pb
       .collection("classes")
-      .update(params.classId, { students: updateList })
+      .update(params.classId[0], { students: updateList })
     setClassInfo({
       collectionId: classInfo?.collectionId,
       collectionName: classInfo?.collectionName,
@@ -55,6 +56,7 @@ export default function ClassDetail() {
       updated: classInfo?.updated,
       year: classInfo?.year,
     })
+    }
   }
 
   useEffect(() => {
