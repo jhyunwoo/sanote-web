@@ -2,7 +2,11 @@ import pb from "@/lib/pocketbase"
 import { NextResponse } from "next/server"
 import webPush from "web-push"
 
-export async function POST(request: Request) {
+type ResponseData = {
+  message: string
+}
+
+export async function POST(request:Request ) {
   if (
     !process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY ||
     !process.env.WEB_PUSH_EMAIL ||
@@ -34,15 +38,15 @@ export async function POST(request: Request) {
             },
           },
 
-          Buffer.from(JSON.stringify({
+          JSON.stringify({
             title: "안녕하세요",
             message: "메세지 전송 테스트",
             tag: "message-tag",
-          }))
+          })
         )
         .catch(e => console.log(e))
     }
   })
 
-  return NextResponse.json("hello")
+  return NextResponse.json({ message: 'Hello from Next.js!' })
 }
