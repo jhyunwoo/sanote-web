@@ -1,27 +1,7 @@
-"use client"
-
-import ProtectedPage from "./components/ProtectedPage"
-import pb from "@/lib/pocketbase"
-import { useResetRecoilState } from "recoil"
-import { userInfo } from "@/lib/recoil"
-import PushNoti from "./components/PushNoti"
-
 export default function Home() {
-  const resetUserInfo = useResetRecoilState(userInfo)
-
-  function userSignOut() {
-    pb.authStore.clear()
-    resetUserInfo()
-  }
-
   return (
     <div>
-      <ProtectedPage />
-      <div>Sanote Home</div>
-      <div>
-        <button onClick={userSignOut}>Sign Out</button>
-      </div>
-      <PushNoti />
+      <div>Home Page</div>
     </div>
   )
 }

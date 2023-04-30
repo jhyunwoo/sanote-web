@@ -3,17 +3,10 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import webPush from "web-push"
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (
-    !process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY ||
-    !process.env.WEB_PUSH_EMAIL ||
-    !process.env.WEB_PUSH_PRIVATE_KEY
-  ) {
-    throw new Error("Environment variables supplied not sufficient.")
-  }
   webPush.setVapidDetails(
-    `mailto:${process.env.WEB_PUSH_EMAIL}`,
-    process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY,
-    process.env.WEB_PUSH_PRIVATE_KEY,
+    `mailto:jhyunwoo0228@gmail.com`,
+    "BCVNyyitZCQORywJsVmjfM4nd1Ptr4t9wbiYS4oUADsw79qKnL7mzezHbgQLXqnBbICpL8ayuLO5WH2wDwyXkIE",
+    "eHZEE5_HN6ccCv2xUotmnkMmjmMZNEUjviHvB3exLyQ",
   )
   webPush.setGCMAPIKey("1073585647206")
   const { userInfo, push } = req.body
