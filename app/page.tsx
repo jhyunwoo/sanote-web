@@ -1,7 +1,12 @@
+import SignOut from "./SignOut"
+import ProtectedPage from "./components/ProtectedPage"
+
 export default function Home() {
   return (
     <div>
-      <div>Home Page</div>
+      <ProtectedPage />
+      <div>Home</div>
+      <SignOut />
     </div>
   )
 }
