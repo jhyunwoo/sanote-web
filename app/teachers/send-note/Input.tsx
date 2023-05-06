@@ -1,119 +1,178 @@
 "use client"
 
-import pb from "@/lib/pocketbase"
-import { useForm, SubmitHandler } from "react-hook-form"
+import { SubmitHandler, useForm } from "react-hook-form"
 import { useState } from "react"
+import axios from "axios"
+import pb from "@/lib/pocketbase"
 
 type Inputs = {
-  search: string
+	search: string
+}
+
+type NoteType = {
+	title: string
+	content: string
 }
 
 type SearchResultType = {
-  users: any[]
-  classes: any[]
+	users: any[]
+	classes: any[]
 }
 
 export default function Input() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>()
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<Inputs>()
 
-  const [searchResult, setSearchResult] = useState<SearchResultType>({
-    users: [],
-    classes: [],
-  })
+	const {
+		register: register2,
+		handleSubmit: handleSubmit2,
+		formState: { errors: errors2 },
+	} = useForm<NoteType>()
 
-  const [receiver, setReceiver] = useState<any[]>([])
-  const [receiveClass, setReceiveClass] = useState<any[]>([])
+	const [searchResult, setSearchResult] = useState<SearchResultType>({
+		users: [],
+		classes: [],
+	})
 
-  const onSubmit: SubmitHandler<Inputs> = async data => {
-    const users = await pb.collection("users").getFullList({
-      filter: `name~"${data.search}" || studentId="${data.search}"`,
-      expand: "pushInfos(user)",
-    })
-    const classes = await pb.collection("classes").getFullList({
-      filter: `title~"${data.search}"`,
-      expand: "students.pushInfos(user)",
-    })
-    const results = { users: users, classes: classes }
-    setSearchResult(results)
-  }
+	const [receiver, setReceiver] = useState<any[]>([])
+	const [receiveClass, setReceiveClass] = useState<any[]>([])
 
-  function addReceiver(data: any) {
-    if (!receiver.includes(data)) {
-      setReceiver([...receiver, data])
-    }
-  }
+	const onSubmit: SubmitHandler<Inputs> = async (data) => {
+		const users = await pb.collection("users").getFullList({
+			filter: `name~"${data.search}" || studentId="${data.search}"`,
+			expand: "pushInfos(user)",
+		})
+		const classes = await pb.collection("classes").getFullList({
+			filter: `title~"${data.search}"`,
+			expand: "students.pushInfos(user)",
+		})
+		const results = {
+			users,
+			classes,
+		}
+		setSearchResult(results)
+	}
 
-  function addReceiverClass(data: any) {
-    if (!receiveClass.includes(data)) {
-      setReceiveClass([...receiveClass, data])
-    }
-  }
+	const onSubmitNote: SubmitHandler<NoteType> = async (data) => {
+		if (receiver.length > 0 || receiveClass.length > 0) {
+			const pushInfos: any[] = []
+			for (let i = 0; i < receiver.length; i++) {
+				for (let j = 0; j < receiver[i].expand["pushInfos(user)"]?.length; j++) {
+					pushInfos.push(receiver[i].expand["pushInfos(user)"][j])
+				}
+			}
+			for (let k = 0; k < receiveClass.length; k++) {
+				for (let l = 0; l < receiveClass[k]?.expand?.students?.length; l++) {
+					for (let m = 0; m < receiveClass[k]?.expand?.students[l]?.expand["pushInfos(user)"]?.length; m++) {
+						if (
+							pushInfos.filter((e) => {
+								return e.endpoint === receiveClass[k]?.expand?.students[l]?.expand["pushInfos(user)"][m].endpoint
+							}).length < 1
+						)
+							pushInfos.push(receiveClass[k]?.expand?.students[l]?.expand["pushInfos(user)"][m])
+					}
+				}
+			}
+			axios.post("/teachers/send-note/send-push", {
+				note: data,
+				users: pushInfos,
+			})
+		}
+	}
 
-  function deleteReceiver(data: any) {
-    let list = receiver
-    let filtered = list.filter(element => element !== data)
-    setReceiver(filtered)
-  }
+	function addReceiver(data: any) {
+		if (!receiver.includes(data)) {
+			setReceiver([...receiver, data])
+		}
+	}
 
-  function deleteReceiverClass(data: any) {
-    let list = receiveClass
-    let filtered = list.filter(element => element !== data)
-    setReceiveClass(filtered)
-  }
+	function addReceiverClass(data: any) {
+		if (!receiveClass.includes(data)) {
+			setReceiveClass([...receiveClass, data])
+		}
+	}
 
-  return (
-    <div>
-      <div>보낼 사람</div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input {...register("search")} />
-        <button type="submit">검색</button>
-      </form>
-      <div>
-        {searchResult.classes?.map((data, key) => (
-          <button
-            onClick={() => addReceiverClass(data)}
-            key={key}
-            className={"flex"}
-          >
-            <div>{data.title}</div>
-            <div>{data.pac}팩</div>
-            <div>{data.students?.length}명</div>
-          </button>
-        ))}
-        {searchResult.users?.map((data, key) => (
-          <button
-            onClick={() => addReceiver(data)}
-            key={key}
-            className={"flex"}
-          >
-            <div>{data.name}</div>
-            <div>{data.studentId ? data.studentId : "선생님"}</div>
-          </button>
-        ))}
-      </div>
-      <div>
-        <div>목록</div>
-        <div>
-          {receiver.map((data, key) => (
-            <div key={key} className="flex">
-              <div>{data.name}</div>
-              <div>{data.studentId ? data.studentId : "선생님"}</div>
-              <button onClick={() => deleteReceiver(data)}>삭제</button>
-            </div>
-          ))}
-          {receiveClass.map((data, key) => (
-            <div key={key} className="flex">
-              <div>{data.title}</div>
-              <div>{data.pac}</div>
-              <button onClick={() => deleteReceiverClass(data)}>삭제</button>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
+	function deleteReceiver(data: any) {
+		const list = receiver
+		const filtered = list.filter((element) => element !== data)
+		setReceiver(filtered)
+	}
+
+	function deleteReceiverClass(data: any) {
+		const list = receiveClass
+		const filtered = list.filter((element) => element !== data)
+		setReceiveClass(filtered)
+	}
+
+	return (
+		<div>
+			<div>보낼 사람</div>
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<input {...register("search")} />
+				<button type="submit">검색</button>
+			</form>
+			<div>
+				{searchResult.classes?.map((data, key) => (
+					<button onClick={() => addReceiverClass(data)} key={key} className="flex">
+						<div>{data.title}</div>
+						<div>{data.pac}팩</div>
+						<div>{data.students?.length}명</div>
+					</button>
+				))}
+				{searchResult.users?.map((data, key) => (
+					<button onClick={() => addReceiver(data)} key={key} className="flex">
+						<div>{data.name}</div>
+						<div>{data.studentId ? data.studentId : "선생님"}</div>
+					</button>
+				))}
+			</div>
+			<div>
+				<div>목록</div>
+				<div>
+					{receiver.map((data, key) => (
+						<div key={key} className="flex">
+							<div>{data.name}</div>
+							<div>{data.studentId ? data.studentId : "선생님"}</div>
+							<button onClick={() => deleteReceiver(data)}>삭제</button>
+						</div>
+					))}
+					{receiveClass.map((data, key) => (
+						<div key={key} className="flex">
+							<div>{data.title}</div>
+							<div>{data.pac}</div>
+							<button onClick={() => deleteReceiverClass(data)}>삭제</button>
+						</div>
+					))}
+				</div>
+			</div>
+			<div>
+				<form onSubmit={handleSubmit2(onSubmitNote)}>
+					<div>제목</div>
+					<input
+						{...register2("title", {
+							required: {
+								value: true,
+								message: "제목을 입력하세요.",
+							},
+						})}
+					/>
+					{errors2?.title ? <p>{errors2.title.message}</p> : ""}
+					<div>내용</div>
+					<input
+						{...register2("content", {
+							required: {
+								value: true,
+								message: "내용을 입력하세요.",
+							},
+						})}
+					/>
+					{errors2?.content ? <p>{errors2.content.message}</p> : ""}
+					<button type="submit">보내기</button>
+				</form>
+			</div>
+		</div>
+	)
 }
