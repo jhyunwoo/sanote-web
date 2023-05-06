@@ -1,9 +1,9 @@
 "use client"
 
-import { useForm, SubmitHandler } from "react-hook-form"
 import pb from "@/lib/pocketbase"
 import { useRouter } from "next/navigation"
-import { useRecoilState } from "recoil"
+import { useForm, SubmitHandler } from "react-hook-form"
+import { useSetRecoilState } from "recoil"
 import { userInfo } from "@/lib/recoil"
 
 type Inputs = {
@@ -11,20 +11,21 @@ type Inputs = {
   password: string
 }
 
-export default function SignInInputArea() {
+export default function SignInInput() {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>()
   const router = useRouter()
-  const [user, setUser] = useRecoilState(userInfo)
+  const setUser = useSetRecoilState(userInfo)
 
   const onSubmit: SubmitHandler<Inputs> = async data => {
+    console.log(data)
     const authData = await pb
       .collection("users")
       .authWithPassword(data.email, data.password)
-    if (authData?.token) {
+    if (authData.token) {
       setUser({
         id: authData.record.id,
         username: authData.record.username,
@@ -38,23 +39,22 @@ export default function SignInInputArea() {
         department: authData.record.department,
         valid: authData.record.valid,
       })
-      router.replace("/")
-    } else {
-      alert("login error")
+      router.replace("/teachers")
     }
   }
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-        <div>email</div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div>이메일</div>
         <input
           type="email"
           {...register("email", {
-            required: { value: true, message: "이메일을 입력해주세요" },
+            required: { value: true, message: "이메일을 입력해주세요." },
           })}
         />
-        <div>password</div>
+        {errors.email && <span>{errors.email.message}</span>}
+        <div>비밀번호</div>
         <input
           type="password"
           {...register("password", {
@@ -63,7 +63,7 @@ export default function SignInInputArea() {
         />
         {errors.password && <span>{errors.password.message}</span>}
 
-        <button type="submit">로그인</button>
+        <button type="submit">회원가입</button>
       </form>
     </div>
   )

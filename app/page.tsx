@@ -1,4 +1,5 @@
 import SignOut from "./SignOut"
+import Push from "./components/Push"
 import ProtectedPage from "./components/ProtectedPage"
 
 export default function Home() {
@@ -7,6 +8,7 @@ export default function Home() {
       <ProtectedPage />
       <div>Home</div>
       <SignOut />
+      <Push />
     </div>
   )
 }
