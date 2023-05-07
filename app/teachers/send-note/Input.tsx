@@ -76,10 +76,11 @@ export default function Input() {
 					}
 				}
 			}
-			axios.post("/teachers/send-note/send-push", {
+			const result = await axios.post("/teachers/send-note/send-push", {
 				note: data,
 				users: pushInfos,
 			})
+			console.log(result)
 		}
 	}
 

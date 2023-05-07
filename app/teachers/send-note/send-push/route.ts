@@ -9,6 +9,7 @@ export async function POST(request: Request) {
 	)
 	webPush.setGCMAPIKey("1073585647206")
 	const requestData = await request.json()
+	let result = []
 	for (let i = 0; i < requestData?.users?.length; i++) {
 		webPush
 			.sendNotification(
@@ -27,7 +28,8 @@ export async function POST(request: Request) {
 				}),
 			)
 			.catch((e) => console.log(e))
+		result.push(requestData.users[i].id)
 	}
 
-	return NextResponse.json({ status: "Good" })
+	return NextResponse.json({ status: result })
 }
