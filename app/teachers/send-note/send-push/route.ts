@@ -11,7 +11,7 @@ export async function POST(request: Request) {
 	const requestData = await request.json()
 	let result = []
 	for (let i = 0; i < requestData?.users?.length; i++) {
-		webPush
+		await webPush
 			.sendNotification(
 				{
 					endpoint: requestData.users[i].endpoint,
