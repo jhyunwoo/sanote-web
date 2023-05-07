@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { useState } from "react"
 import axios from "axios"
 import pb from "@/lib/pocketbase"
+import { useRouter } from "next/navigation"
 
 type Inputs = {
 	search: string
@@ -31,6 +32,8 @@ export default function Input() {
 		handleSubmit: handleSubmit2,
 		formState: { errors: errors2 },
 	} = useForm<NoteType>()
+
+	const router = useRouter()
 
 	const [searchResult, setSearchResult] = useState<SearchResultType>({
 		users: [],
@@ -113,6 +116,7 @@ export default function Input() {
 				users: pushInfos,
 			})
 			console.log(result)
+			router.push("/teachers")
 		}
 	}
 
