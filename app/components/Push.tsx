@@ -1,6 +1,7 @@
 "use client"
 
 import pb from "@/lib/pocketbase"
+import { BellIcon } from "@heroicons/react/24/outline"
 
 export default function Push() {
 	async function pushInfo(subscription: PushSubscription) {
@@ -43,8 +44,8 @@ export default function Push() {
 		})
 	}
 	return (
-		<div className="flex flex-col">
-			<button onClick={register}>Register Push</button>
-		</div>
+		<button onClick={register}>
+			<BellIcon className="w-8 h-8 text-orange-800" />
+		</button>
 	)
 }

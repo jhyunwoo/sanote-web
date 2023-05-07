@@ -20,13 +20,14 @@ export default function NoteDetail() {
 		getNoteInfo()
 	}, [param.noteId])
 	return (
-		<div>
-			<div>Note Detail</div>
-			<div>제목: {note?.title}</div>
-			<div>내용: {note?.content}</div>
-			<div>
-				보낸 사람: {note?.expand?.sender?.department} {note?.expand?.sender?.name}
+		<div className="w-full min-h-screen bg-orange-50/50 p-4 pt-16 flex flex-col">
+			<div className="flex justify-between items-center w-full py-4">
+				<div className="text-xl font-bold"> {note?.title}</div>
+				<div>
+					{note?.expand?.sender?.department} {note?.expand?.sender?.name}
+				</div>
 			</div>
+			<div className="mt-4 font-medium text-base bg-white p-4 rounded-xl">{note?.content}</div>
 		</div>
 	)
 }

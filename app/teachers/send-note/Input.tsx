@@ -5,6 +5,7 @@ import { useState } from "react"
 import axios from "axios"
 import pb from "@/lib/pocketbase"
 import { useRouter } from "next/navigation"
+import { MagnifyingGlassIcon, TrashIcon } from "@heroicons/react/24/outline"
 
 type Inputs = {
 	search: string
@@ -145,49 +146,85 @@ export default function Input() {
 	}
 
 	return (
-		<div>
-			<div>보낼 사람</div>
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<input {...register("search")} />
-				<button type="submit">검색</button>
+		<div className="w-full flex flex-col">
+			<form onSubmit={handleSubmit(onSubmit)} className="flex my-2 space-x-2">
+				<input
+					{...register("search")}
+					className="bg-white p-2 px-4 rounded-full ring-2 ring-orange-400 outline-none focus:ring-offset-1 transition duration-200"
+				/>
+				<button type="submit" className="bg-orange-400 rounded-full p-2">
+					<MagnifyingGlassIcon className="w-6 h-6 text-white" />
+				</button>
 			</form>
-			<div>
+
+			<div className="bg-white grid grid-cols-1 gap-2 p-2 rounded-lg">
 				{searchResult.classes?.map((data, key) => (
-					<button onClick={() => addReceiverClass(data)} key={key} className="flex">
+					<button onClick={() => addReceiverClass(data)} key={key} className="flex space-x-2">
 						<div>{data.title}</div>
 						<div>{data.pac}팩</div>
-						<div>{data.students?.length}명</div>
+						<div>
+							{data.year}년 {data.semister}학기
+						</div>
 					</button>
 				))}
 				{searchResult.users?.map((data, key) => (
-					<button onClick={() => addReceiver(data)} key={key} className="flex">
-						<div>{data.name}</div>
-						<div>{data.studentId ? data.studentId : "선생님"}</div>
+					<button onClick={() => addReceiver(data)} key={key} className="flex items-center w-full ">
+						{data.type === "student" ? (
+							<div className="flex space-x-1">
+								<div>{data.studentId ? data.studentId : ""}</div>
+								<div>{data.name}</div>
+							</div>
+						) : (
+							<div className="flex space-x-1">
+								<div>
+									{data.department} {data.name} 선생님
+								</div>
+							</div>
+						)}
 					</button>
 				))}
 			</div>
-			<div>
-				<div>목록</div>
-				<div>
+			<div className="text-lg font-semibold mt-4">수신자</div>
+			<div className="bg-white w-full p-2">
+				<div className="grid grid-cols-1">
 					{receiver.map((data, key) => (
-						<div key={key} className="flex">
-							<div>{data.name}</div>
-							<div>{data.studentId ? data.studentId : "선생님"}</div>
-							<button onClick={() => deleteReceiver(data)}>삭제</button>
+						<div key={key} className="flex justify-between my-1 items-center border-b-2">
+							{data.type === "student" ? (
+								<div className="flex space-x-1">
+									<div>{data.studentId ? data.studentId : ""}</div>
+									<div>{data.name}</div>
+								</div>
+							) : (
+								<div className="flex space-x-1">
+									<div>
+										{data.department} {data.name} 선생님
+									</div>
+								</div>
+							)}
+							<button onClick={() => deleteReceiver(data)}>
+								<TrashIcon className="w-6 h-6 p-1 rounded-lg bg-red-500 text-white" />
+							</button>
 						</div>
 					))}
 					{receiveClass.map((data, key) => (
-						<div key={key} className="flex">
-							<div>{data.title}</div>
-							<div>{data.pac}</div>
-							<button onClick={() => deleteReceiverClass(data)}>삭제</button>
+						<div key={key} className="flex justify-between my-1 items-center border-b-2">
+							<div className="flex space-x-2">
+								<div>{data.title}</div>
+								<div>{data.pac}팩</div>
+								<div>
+									{data.year}년 {data.semister}학기
+								</div>
+							</div>
+							<button onClick={() => deleteReceiverClass(data)}>
+								<TrashIcon className="w-6 h-6 p-1 rounded-lg bg-red-500 text-white" />
+							</button>
 						</div>
 					))}
 				</div>
 			</div>
-			<div>
-				<form onSubmit={handleSubmit2(onSubmitNote)}>
-					<div>제목</div>
+			<div className="mt-8 flex  w-full ">
+				<form onSubmit={handleSubmit2(onSubmitNote)} className="flex flex-col  w-full">
+					<div className="font-semibold text-lg">제목</div>
 					<input
 						{...register2("title", {
 							required: {
@@ -195,19 +232,26 @@ export default function Input() {
 								message: "제목을 입력하세요.",
 							},
 						})}
+						className="p-2 bg-white rounded-lg outline-none"
 					/>
 					{errors2?.title ? <p>{errors2.title.message}</p> : ""}
-					<div>내용</div>
-					<input
+					<div className="font-semibold text-lg mt-4">내용</div>
+					<textarea
 						{...register2("content", {
 							required: {
 								value: true,
 								message: "내용을 입력하세요.",
 							},
 						})}
+						className="p-2 bg-white rounded-lg outline-none"
 					/>
 					{errors2?.content ? <p>{errors2.content.message}</p> : ""}
-					<button type="submit">보내기</button>
+					<button
+						className="bg-orange-400 p-2 px-6 rounded-full text-white font-semibold mt-8 hover:bg-orange-500 transition duration-200"
+						type="submit"
+					>
+						보내기
+					</button>
 				</form>
 			</div>
 		</div>

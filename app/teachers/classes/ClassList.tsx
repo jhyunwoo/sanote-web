@@ -32,24 +32,57 @@ export default function ClassList() {
 	}, [year, semister])
 
 	return (
-		<div>
-			<div>
-				<div>
-					<button onClick={() => setYear(date.getFullYear() - 1)}>{date.getFullYear() - 1}년</button>
-					<button onClick={() => setYear(date.getFullYear())}>{date.getFullYear()}년</button>
-					<button onClick={() => setYear(date.getFullYear() + 1)}>{date.getFullYear() + 1}년</button>
-				</div>
-				<div>
-					<button onClick={() => setSemister(1)}>1학기</button>
-					<button onClick={() => setSemister(2)}>2학기</button>
-				</div>
+		<div className="w-full">
+			<div className=" flex justify-start space-x-2 p-2">
+				<button
+					className={`${
+						year === date.getFullYear() - 1 ? "bg-orange-300 text-white" : "bg-white"
+					} p-1 px-4 rounded-full`}
+					onClick={() => setYear(date.getFullYear() - 1)}
+				>
+					{date.getFullYear() - 1}년
+				</button>
+				<button
+					className={`${year === date.getFullYear() ? "bg-orange-300 text-white" : "bg-white"} p-1 px-4 rounded-full`}
+					onClick={() => setYear(date.getFullYear())}
+				>
+					{date.getFullYear()}년
+				</button>
+				<button
+					className={`${
+						year === date.getFullYear() + 1 ? "bg-orange-300 text-white" : "bg-white"
+					} p-1 px-4 rounded-full`}
+					onClick={() => setYear(date.getFullYear() + 1)}
+				>
+					{date.getFullYear() + 1}년
+				</button>
+			</div>
+			<div className="flex justify-start space-x-2 p-2">
+				<button
+					className={`${semister === 1 ? "bg-orange-300 text-white" : "bg-white"} p-1 px-4 rounded-full`}
+					onClick={() => setSemister(1)}
+				>
+					1학기
+				</button>
+				<button
+					className={`${semister === 2 ? "bg-orange-300 text-white" : "bg-white"} p-1 px-4 rounded-full`}
+					onClick={() => setSemister(2)}
+				>
+					2학기
+				</button>
+			</div>
+			<div className="grid grid-cols-1 gap-3 mt-4">
 				{classList.map((data, key) => (
-					<Link href={`/teachers/classes/${data.id}`} key={key} className="flex">
-						<div>{data.title}</div>
-						<div>{data.pac}팩</div>
-						<div>
-							{data.year}년 {data.semister}학기
+					<Link
+						href={`/teachers/classes/${data.id}`}
+						key={key}
+						className="flex justify-between bg-white p-3 rounded-lg"
+					>
+						<div className="flex space-x-2">
+							<div className="font-semibold">{data.title}</div>
+							<div className="font-semibold">{data.pac}팩</div>
 						</div>
+						<div>{data?.students?.length}명</div>
 					</Link>
 				))}
 			</div>

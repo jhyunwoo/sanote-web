@@ -38,23 +38,40 @@ export default function Input() {
 
 	const date = new Date()
 	return (
-		<div>
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<div>수업명</div>
-				<input {...register("title")} />
-				<div>Pac</div>
-				<input {...register("pac")} />
-				<select {...register("year")}>
+		<div className="w-full flex flex-col">
+			<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
+				<div className="font-semibold text-lg mb-2">수업명</div>
+				<input
+					{...register("title", { required: { value: true, message: "수업명을 입력하세요." } })}
+					className="p-2 bg-white outline-none rounded-lg focus:ring-2 ring-orange-400"
+				/>
+				<div className="font-semibold text-lg my-2">Pac</div>
+				<input
+					{...register("pac", { required: { value: true, message: "팩을 입력하세요." } })}
+					className="p-2 bg-white outline-none rounded-lg focus:ring-2 ring-orange-400"
+				/>
+				<select
+					{...register("year", { required: { value: true, message: "개설 연도를 입력하세요." } })}
+					className="mt-4 p-2 rounded-lg outline-none"
+				>
 					<option value={date.getFullYear()}>{date.getFullYear()}</option>
 					<option value={date.getFullYear() + 1}>{date.getFullYear() + 1}</option>
 				</select>
 
-				<select {...register("semister")}>
+				<select
+					{...register("semister", { required: { value: true, message: "개설 학기를 입력하세요." } })}
+					className="mt-4 p-2 rounded-lg outline-none"
+				>
 					<option value={1}>1학기</option>
 					<option value={2}>2학기</option>
 				</select>
 
-				<button type="submit">생성</button>
+				<button
+					type="submit"
+					className="mt-4 bg-orange-400 text-white font-semibold p-2 rounded-full hover:bg-orange-500 transition duration-200"
+				>
+					생성
+				</button>
 			</form>
 		</div>
 	)
