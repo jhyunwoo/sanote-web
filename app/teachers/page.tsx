@@ -8,7 +8,7 @@ export default function Teachers() {
 			<TeachersProtectedPage />
 			<div>Teachers Page</div>
 			<Link href="/teachers/send-note">Send Note</Link>
-			<Link href="/teachers/create-class">Create Class</Link>
+			<Link href="/teachers/classes">Classes</Link>
 			<Push />
 		</div>
 	)
