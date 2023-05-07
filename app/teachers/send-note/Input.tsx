@@ -58,7 +58,7 @@ export default function Input() {
 
 	const onSubmitNote: SubmitHandler<NoteType> = async (data) => {
 		if (receiver.length > 0 || receiveClass.length > 0) {
-			const pushInfos: any[] = []
+			let pushInfos: any[] = []
 			for (let i = 0; i < receiver.length; i++) {
 				for (let j = 0; j < receiver[i].expand["pushInfos(user)"]?.length; j++) {
 					pushInfos.push(receiver[i].expand["pushInfos(user)"][j])
@@ -76,6 +76,38 @@ export default function Input() {
 					}
 				}
 			}
+			let receiverInfo = []
+			console.log(receiver, receiveClass)
+			for (let n = 0; n < receiver.length; n++) {
+				receiverInfo.push(receiver[n].id)
+			}
+
+			for (let o = 0; o < receiveClass.length; o++) {
+				for (let p = 0; p < receiveClass[o].expand.students.length; p++) {
+					if (
+						receiverInfo.filter((e) => {
+							return e === receiveClass[o]?.expand?.students[p].id
+						}).length < 1
+					)
+						receiverInfo.push(receiveClass[o]?.expand?.students[p].id)
+				}
+			}
+
+			let classIds = []
+			for (let q = 0; q < receiveClass.length; q++) {
+				classIds.push(receiveClass[q].id)
+			}
+
+			const noteData = {
+				title: data.title,
+				content: data.content,
+				sender: pb.authStore.model?.id,
+				receiver: receiverInfo,
+				class: classIds,
+			}
+
+			const record = await pb.collection("notes").create(noteData)
+			console.log(record)
 			const result = await axios.post("/teachers/send-note/send-push", {
 				note: data,
 				users: pushInfos,

@@ -11,8 +11,8 @@ export async function POST(request: Request) {
 	const requestData = await request.json()
 	let result = []
 	for (let i = 0; i < requestData?.users?.length; i++) {
-		await webPush
-			.sendNotification(
+		try {
+			await webPush.sendNotification(
 				{
 					endpoint: requestData.users[i].endpoint,
 					keys: {
@@ -27,9 +27,10 @@ export async function POST(request: Request) {
 					tag: "message-tag",
 				}),
 			)
-			.catch((e) => console.log(e))
-		result.push(requestData.users[i].id)
+		} catch {
+			result.push(requestData.users[i].id)
+		}
 	}
 
-	return NextResponse.json({ status: result })
+	return NextResponse.json({ failed: result })
 }
