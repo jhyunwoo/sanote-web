@@ -45,7 +45,7 @@ export default function Push() {
 	}
 	return (
 		<button onClick={register}>
-			<BellIcon className="w-8 h-8 text-orange-800" />
+			<BellIcon className="w-6 h-6 text-orange-800" />
 		</button>
 	)
 }

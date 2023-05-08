@@ -243,7 +243,7 @@ export default function Input() {
 								message: "내용을 입력하세요.",
 							},
 						})}
-						className="p-2  rounded-lg outline-none"
+						className="p-2 h-40 rounded-lg outline-none"
 					/>
 					{errors2?.content ? <p>{errors2.content.message}</p> : ""}
 					<button

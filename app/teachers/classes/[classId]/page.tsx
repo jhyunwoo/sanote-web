@@ -4,8 +4,6 @@ import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import pb from "@/lib/pocketbase"
 import TeachersProtectedPage from "@/app/components/TeachersProtectedPage"
-import HeadBar from "@/app/components/HeadBar"
-import TeachersBottomBar from "@/app/components/TeachersBottomBar"
 import { TrashIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
 
@@ -71,10 +69,30 @@ export default function ClassDetail() {
 				<div className="mt-2 text-md font-semibold">
 					{classInfo?.year}년 {classInfo?.semister}학기
 				</div>
-				<div className="mt-4 font-semibold text-lg ml-3">학생</div>
-				<div className=" p-3 px-4 rounded-xl">
+				<div className="my-4 font-semibold text-lg">보낸 쪽지</div>
+
+				<div className="grid grid-cols-1 gap-2 w-full ">
+					{classNotes?.map((data, key) => (
+						<Link
+							href={`/teachers/notes/${data.id}`}
+							key={key}
+							className="flex justify-between items-center bg-white rounded-lg p-3"
+						>
+							<div className="text-base font-semibold mx-2">{data.title}</div>
+
+							<div className="flex flex-col items-end text-sm">
+								<div>{getDate(data.created)}</div>
+								<div>
+									{getReadList(data)}/{classInfo.students?.length}
+								</div>
+							</div>
+						</Link>
+					))}
+				</div>
+				<div className="my-4 font-semibold text-lg">학생</div>
+				<div className="rounded-xl flex flex-col">
 					{classInfo?.expand?.students?.map((data: any, key: number) => (
-						<div key={key} className="flex justify-between font-base">
+						<div key={key} className="flex justify-between font-base bg-white p-3 rounded-xl">
 							<div>
 								<div>{data.studentId ? data.studentId : ""}</div>
 								<div>{data.name}</div>
@@ -84,22 +102,7 @@ export default function ClassDetail() {
 							</button>
 						</div>
 					))}
-				</div>
-				<div className="mt-4 font-semibold text-lg ml-3">보낸 쪽지</div>
-
-				<div className="grid grid-cols-1 gap-2 w-full p-3 ">
-					{classNotes?.map((data, key) => (
-						<Link href={`/teachers/notes/${data.id}`} key={key} className="flex justify-between  rounded-lg p-2">
-							<div className="text-base font-semibold">{data.title}</div>
-
-							<div className="flex space-x-4">
-								<div>{getDate(data.created)}</div>
-								<div>
-									{getReadList(data)}/{classInfo.students?.length}
-								</div>
-							</div>
-						</Link>
-					))}
+					{classInfo?.expand?.students ? "" : <div className="mx-auto font-medium">학생이 없습니다.</div>}
 				</div>
 			</div>
 		</div>

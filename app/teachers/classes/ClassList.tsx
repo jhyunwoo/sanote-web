@@ -67,14 +67,18 @@ export default function ClassList() {
 					2학기
 				</button>
 			</div>
-			<div className="grid grid-cols-1 gap-3 mt-4">
+			<div className="grid grid-cols-2 gap-3 mt-4">
 				{classList.map((data, key) => (
-					<Link href={`/teachers/classes/${data.id}`} key={key} className="flex justify-between  p-3 rounded-lg">
-						<div className="flex space-x-2">
+					<Link
+						href={`/teachers/classes/${data.id}`}
+						key={key}
+						className="flex flex-col justify-between bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-200"
+					>
+						<div className="flex flex-col">
 							<div className="font-semibold">{data.title}</div>
 							<div className="font-semibold">{data.pac}팩</div>
 						</div>
-						<div>{data?.students?.length}명</div>
+						<div className="ml-auto">{data?.students?.length}명</div>
 					</Link>
 				))}
 			</div>
