@@ -42,9 +42,10 @@ export default function SignInInput() {
 	}
 
 	return (
-		<div className="w-full">
+		<div className="w-full flex flex-col items-center bg-white p-4 px-12 rounded-xl shadow-xl">
+			<div className="text-xl font-bold m-4">로그인</div>
 			<form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col">
-				<div className="font-semibold text-lg">이메일</div>
+				<div className="font-semibold text-base">이메일</div>
 				<input
 					type="email"
 					{...register("email", {
@@ -53,9 +54,10 @@ export default function SignInInput() {
 							message: "이메일을 입력해주세요.",
 						},
 					})}
+					className="outline-none ring-1 ring-orange-300 hover:ring-offset-1 transition duration-200 p-1 px-2 rounded-lg my-1"
 				/>
-				{errors.email && <span>{errors.email.message}</span>}
-				<div className="font-semibold text-lg">비밀번호</div>
+				{errors.email && <span className="text-sm text-rose-400">{errors.email.message}</span>}
+				<div className="font-semibold text-base">비밀번호</div>
 				<input
 					type="password"
 					{...register("password", {
@@ -64,10 +66,16 @@ export default function SignInInput() {
 							message: "비밀번호를 입력해주세요.",
 						},
 					})}
+					className="outline-none ring-1 ring-orange-300 hover:ring-offset-1 transition duration-200 p-1 px-2 rounded-lg my-1"
 				/>
-				{errors.password && <span>{errors.password.message}</span>}
+				{errors.password && <span className="text-sm text-rose-400">{errors.password.message}</span>}
 
-				<button type="submit">회원가입</button>
+				<button
+					type="submit"
+					className=" my-2 bg-orange-400 hover:bg-orange-300 p-1 px-2 rounded-full text-white font-semibold transition duration-200"
+				>
+					로그인
+				</button>
 			</form>
 		</div>
 	)
