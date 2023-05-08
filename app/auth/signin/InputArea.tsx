@@ -43,25 +43,32 @@ export default function SignInInputArea() {
 	}
 
 	return (
-		<div>
+		<div className="w-full flex flex-col">
 			<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-				<div>email</div>
+				<div className="text-base font-semibold">이메일</div>
 				<input
 					type="email"
 					{...register("email", {
 						required: { value: true, message: "이메일을 입력해주세요" },
 					})}
+					className="ring-2 ring-orange-400 hover:ring-offset-1 transition duration-200 p-1 px-2 rounded-lg mt-1 mb-2 outline-none"
 				/>
-				<div>password</div>
+				<div className="text-base font-semibold">비밀번호</div>
 				<input
 					type="password"
 					{...register("password", {
 						required: { value: true, message: "비밀번호를 입력해주세요." },
 					})}
+					className="ring-2 ring-orange-400 hover:ring-offset-1 transition duration-200 p-1 px-2 rounded-lg mt-1 mb-2 outline-none"
 				/>
 				{errors.password && <span>{errors.password.message}</span>}
 
-				<button type="submit">로그인</button>
+				<button
+					type="submit"
+					className="bg-orange-400 p-2 text-white hover:bg-orange-500 transition duration-200 rounded-full mt-4"
+				>
+					로그인
+				</button>
 			</form>
 		</div>
 	)
