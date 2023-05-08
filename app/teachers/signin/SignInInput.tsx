@@ -42,9 +42,9 @@ export default function SignInInput() {
 	}
 
 	return (
-		<div>
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<div>이메일</div>
+		<div className="w-full">
+			<form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col">
+				<div className="font-semibold text-lg">이메일</div>
 				<input
 					type="email"
 					{...register("email", {
@@ -55,7 +55,7 @@ export default function SignInInput() {
 					})}
 				/>
 				{errors.email && <span>{errors.email.message}</span>}
-				<div>비밀번호</div>
+				<div className="font-semibold text-lg">비밀번호</div>
 				<input
 					type="password"
 					{...register("password", {

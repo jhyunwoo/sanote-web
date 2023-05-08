@@ -1,4 +1,4 @@
-import { BookOpenIcon, EnvelopeIcon, PaperAirplaneIcon, UsersIcon } from "@heroicons/react/24/outline"
+import { BookOpenIcon, EnvelopeIcon, PaperAirplaneIcon, UserCircleIcon, UsersIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
 
 export default function TeachersBottomBar() {
@@ -21,6 +21,12 @@ export default function TeachersBottomBar() {
 				className="group w-10 h-10 flex justify-center items-center p-2 rounded-xl hover:bg-orange-300 transition duration-200"
 			>
 				<BookOpenIcon className="w-8 h-8 text-orange-950 group-hover:text-white transition duration-200" />
+			</Link>
+			<Link
+				href={"/teachers/user"}
+				className="group w-10 h-10 flex justify-center items-center p-2 rounded-xl hover:bg-orange-300 transition duration-200"
+			>
+				<UserCircleIcon className="w-8 h-8 text-orange-950 group-hover:text-white transition duration-200" />
 			</Link>
 		</div>
 	)

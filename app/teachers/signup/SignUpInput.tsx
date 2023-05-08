@@ -27,7 +27,7 @@ export default function SignUpInput() {
 			password: data.password,
 			passwordConfirm: data.passwordConfirm,
 			name: data.name,
-			type: "teacher",
+			type: "student",
 			department: data.department,
 		}
 
