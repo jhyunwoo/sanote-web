@@ -36,7 +36,7 @@ export default function ClassDetail() {
 		let classList = classInfo.expand?.students?.map((data: any) => data.id)
 		let readList = []
 		for (let i = 0; i < note.expand?.read?.length; i++) {
-			if (classList.includes(note.expand.read[i].id)) {
+			if (classList?.includes(note.expand.read[i].id)) {
 				readList.push(note.expand.read[i])
 			}
 		}
