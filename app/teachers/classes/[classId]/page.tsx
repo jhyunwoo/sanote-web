@@ -61,7 +61,7 @@ export default function ClassDetail() {
 	}, [params.classId])
 
 	return (
-		<div className="w-full min-h-screen bg-orange-50/50 p-4 pt-16 flex flex-col">
+		<div className="w-full min-h-screen  p-4 pt-16 flex flex-col">
 			<TeachersProtectedPage />
 
 			<div className="mt-2">
@@ -72,7 +72,7 @@ export default function ClassDetail() {
 					{classInfo?.year}년 {classInfo?.semister}학기
 				</div>
 				<div className="mt-4 font-semibold text-lg ml-3">학생</div>
-				<div className="bg-white p-3 px-4 rounded-xl">
+				<div className=" p-3 px-4 rounded-xl">
 					{classInfo?.expand?.students?.map((data: any, key: number) => (
 						<div key={key} className="flex justify-between font-base">
 							<div>
@@ -89,11 +89,7 @@ export default function ClassDetail() {
 
 				<div className="grid grid-cols-1 gap-2 w-full p-3 ">
 					{classNotes?.map((data, key) => (
-						<Link
-							href={`/teachers/notes/${data.id}`}
-							key={key}
-							className="flex justify-between bg-white rounded-lg p-2"
-						>
+						<Link href={`/teachers/notes/${data.id}`} key={key} className="flex justify-between  rounded-lg p-2">
 							<div className="text-base font-semibold">{data.title}</div>
 
 							<div className="flex space-x-4">

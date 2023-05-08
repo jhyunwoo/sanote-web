@@ -43,12 +43,12 @@ export default function Input() {
 				<div className="font-semibold text-lg mb-2">수업명</div>
 				<input
 					{...register("title", { required: { value: true, message: "수업명을 입력하세요." } })}
-					className="p-2 bg-white outline-none rounded-lg focus:ring-2 ring-orange-400"
+					className="p-2  outline-none rounded-lg focus:ring-2 ring-orange-400"
 				/>
 				<div className="font-semibold text-lg my-2">Pac</div>
 				<input
 					{...register("pac", { required: { value: true, message: "팩을 입력하세요." } })}
-					className="p-2 bg-white outline-none rounded-lg focus:ring-2 ring-orange-400"
+					className="p-2  outline-none rounded-lg focus:ring-2 ring-orange-400"
 				/>
 				<select
 					{...register("year", { required: { value: true, message: "개설 연도를 입력하세요." } })}
@@ -68,7 +68,7 @@ export default function Input() {
 
 				<button
 					type="submit"
-					className="mt-4 bg-orange-400 text-white font-semibold p-2 rounded-full hover:bg-orange-500 transition duration-200"
+					className="mt-4 bg-orange-400 text-white font-semibold p-2 rounded-full hover:0 transition duration-200"
 				>
 					생성
 				</button>

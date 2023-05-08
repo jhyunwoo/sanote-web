@@ -35,7 +35,7 @@ export default function NoteList() {
 						href={`/teachers/notes/${data.id}`}
 						key={key}
 						className={`${
-							data.read.includes(user.id) ? "bg-orange-100" : "bg-white"
+							data.read.includes(user.id) ? "bg-slate-100" : ""
 						} p-4 rounded-lg flex justify-between items-center`}
 					>
 						<div className="font-bold text-md">{data.title}</div>

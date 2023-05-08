@@ -150,14 +150,14 @@ export default function Input() {
 			<form onSubmit={handleSubmit(onSubmit)} className="flex my-2 space-x-2">
 				<input
 					{...register("search")}
-					className="bg-white p-2 px-4 rounded-full ring-2 ring-orange-400 outline-none focus:ring-offset-1 transition duration-200"
+					className=" p-2 px-4 rounded-full ring-2 ring-orange-400 outline-none focus:ring-offset-1 transition duration-200"
 				/>
 				<button type="submit" className="bg-orange-400 rounded-full p-2">
 					<MagnifyingGlassIcon className="w-6 h-6 text-white" />
 				</button>
 			</form>
 
-			<div className="bg-white grid grid-cols-1 gap-2 p-2 rounded-lg">
+			<div className=" grid grid-cols-1 gap-2 p-2 rounded-lg">
 				{searchResult.classes?.map((data, key) => (
 					<button onClick={() => addReceiverClass(data)} key={key} className="flex space-x-2">
 						<div>{data.title}</div>
@@ -185,7 +185,7 @@ export default function Input() {
 				))}
 			</div>
 			<div className="text-lg font-semibold mt-4">수신자</div>
-			<div className="bg-white w-full p-2">
+			<div className=" w-full p-2">
 				<div className="grid grid-cols-1">
 					{receiver.map((data, key) => (
 						<div key={key} className="flex justify-between my-1 items-center border-b-2">
@@ -232,7 +232,7 @@ export default function Input() {
 								message: "제목을 입력하세요.",
 							},
 						})}
-						className="p-2 bg-white rounded-lg outline-none"
+						className="p-2  rounded-lg outline-none"
 					/>
 					{errors2?.title ? <p>{errors2.title.message}</p> : ""}
 					<div className="font-semibold text-lg mt-4">내용</div>
@@ -243,11 +243,11 @@ export default function Input() {
 								message: "내용을 입력하세요.",
 							},
 						})}
-						className="p-2 bg-white rounded-lg outline-none"
+						className="p-2  rounded-lg outline-none"
 					/>
 					{errors2?.content ? <p>{errors2.content.message}</p> : ""}
 					<button
-						className="bg-orange-400 p-2 px-6 rounded-full text-white font-semibold mt-8 hover:bg-orange-500 transition duration-200"
+						className="bg-orange-400 p-2 px-6 rounded-full text-white font-semibold mt-8 hover:0 transition duration-200"
 						type="submit"
 					>
 						보내기
