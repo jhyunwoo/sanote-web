@@ -24,7 +24,11 @@ export default function ChangePassword() {
 			const record = await pb
 				.collection("users")
 				.confirmPasswordReset(param?.token, data.password, data.passwordConfirm)
-			console.log(record)
+			if (record) {
+				router.push("/auth/signin")
+			}
+		} else {
+			alert("비밀번호가 일치하지 않습니다.")
 		}
 	}
 
