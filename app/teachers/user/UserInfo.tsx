@@ -33,7 +33,10 @@ export default function UserInfo() {
 				<div className="ml-auto text-base">{user?.department}</div>
 				<div className="ml-auto text-base">{user?.email}</div>
 			</div>
-			<button className="text-orange-400 mt-8 p-1 rounded-full font-semibold hover:text-orange-500 transition duration-200">
+			<button
+				onClick={() => router.push("/teachers/user/change-password")}
+				className="text-orange-400 mt-8 p-1 rounded-full font-semibold hover:text-orange-500 transition duration-200"
+			>
 				비밀번호 변경
 			</button>
 			<button
