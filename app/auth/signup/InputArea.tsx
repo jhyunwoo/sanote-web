@@ -48,16 +48,18 @@ export default function SignUpInputArea() {
 	}
 
 	return (
-		<div>
+		<div className="w-full">
 			<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-				<div>email</div>
+				<div className="text-base font-semibold mt-2 mb-1">이메일</div>
 				<input
 					type="email"
 					{...register("email", {
 						required: { value: true, message: "이메일을 입력해주세요" },
 					})}
+					className="ring-2 ring-orange-400 hover:ring-offset-1 transition duration-200 p-1 px-2 rounded-lg mt-1 mb-2 outline-none"
 				/>
-				<div>password</div>
+				{errors.email && <span className="text-sm text-red-400">{errors.email.message}</span>}
+				<div className="text-base font-semibold mt-2 mb-1">비밀번호</div>
 				<input
 					type="password"
 					{...register("password", {
@@ -67,9 +69,10 @@ export default function SignUpInputArea() {
 							message: "비밀번호는 8자리 이상으로 설정해야합니다.",
 						},
 					})}
+					className="ring-2 ring-orange-400 hover:ring-offset-1 transition duration-200 p-1 px-2 rounded-lg mt-1 mb-2 outline-none"
 				/>
-				{errors.password && <span>{errors.password.message}</span>}
-				<div>Password Confirm</div>
+				{errors.password && <span className="text-sm text-red-400">{errors.password.message}</span>}
+				<div className="text-base font-semibold mt-2 mb-1">비밀번호 확인</div>
 				<input
 					type="password"
 					{...register("passwordConfirm", {
@@ -79,47 +82,85 @@ export default function SignUpInputArea() {
 							message: "비밀번호는 8자리 이상으로 설정해야합니다.",
 						},
 					})}
+					className="ring-2 ring-orange-400 hover:ring-offset-1 transition duration-200 p-1 px-2 rounded-lg mt-1 mb-2 outline-none"
 				/>
-				{errors.passwordConfirm && <span>{errors.passwordConfirm.message}</span>}
-				<div>Name</div>
+				{errors.passwordConfirm && <span className="text-sm text-red-400">{errors.passwordConfirm.message}</span>}
+				<div className="text-base font-semibold mt-2 mb-1">이름</div>
 				<input
 					{...register("name", {
 						required: { value: true, message: "이름을 입력해주세요." },
 					})}
+					className="ring-2 ring-orange-400 hover:ring-offset-1 transition duration-200 p-1 px-2 rounded-lg mt-1 mb-2 outline-none"
 				/>
-				{errors.name && <span>{errors.name.message}</span>}
+				{errors.name && <span className="text-sm text-red-400">{errors.name.message}</span>}
 
-				<div>Student Id</div>
+				<div className="text-base font-semibold mt-2 mb-1">학번 (6자리)</div>
 				<input
 					type="number"
 					{...register("studentId", {
 						required: { value: true, message: "학번을 입력해주세요." },
 					})}
+					className="ring-2 ring-orange-400 hover:ring-offset-1 transition duration-200 p-1 px-2 rounded-lg mt-1 mb-2 outline-none"
 				/>
-				{errors.studentId && <span>{errors.studentId.message}</span>}
-
-				<select {...register("year")}>
-					<option value={1}>1학년</option>
-					<option value={2}>2학년</option>
-					<option value={3}>3학년</option>
+				{errors.studentId && <span className="text-sm text-red-400">{errors.studentId.message}</span>}
+				<div className="text-base font-semibold mt-2 mb-1">학년</div>
+				<select {...register("year")} className="outline-none p-2 rounded-lg focus:ring-2 ring-orange-400">
+					<option className="p-1 rounded-lg" value={1}>
+						1학년
+					</option>
+					<option className="p-1 rounded-lg" value={2}>
+						2학년
+					</option>
+					<option className="p-1 rounded-lg" value={3}>
+						3학년
+					</option>
+				</select>
+				<div className="text-base font-semibold mt-2 mb-1">반</div>
+				<select {...register("class")} className="outline-none p-2 rounded-lg focus:ring-2 ring-orange-400">
+					<option className="p-1 rounded-lg" value={1}>
+						1반
+					</option>
+					<option className="p-1 rounded-lg" value={2}>
+						2반
+					</option>
+					<option className="p-1 rounded-lg" value={3}>
+						3반
+					</option>
+					<option className="p-1 rounded-lg" value={4}>
+						4반
+					</option>
+					<option className="p-1 rounded-lg" value={5}>
+						5반
+					</option>
+					<option className="p-1 rounded-lg" value={6}>
+						6반
+					</option>
+					<option className="p-1 rounded-lg" value={7}>
+						7반
+					</option>
+					<option className="p-1 rounded-lg" value={8}>
+						8반
+					</option>
+					<option className="p-1 rounded-lg" value={9}>
+						9반
+					</option>
+					<option className="p-1 rounded-lg" value={10}>
+						10반
+					</option>
+					<option className="p-1 rounded-lg" value={11}>
+						11반
+					</option>
+					<option className="p-1 rounded-lg" value={12}>
+						12반
+					</option>
 				</select>
 
-				<select {...register("class")}>
-					<option value={1}>1반</option>
-					<option value={2}>2반</option>
-					<option value={3}>3반</option>
-					<option value={4}>4반</option>
-					<option value={5}>5반</option>
-					<option value={6}>6반</option>
-					<option value={7}>7반</option>
-					<option value={8}>8반</option>
-					<option value={9}>9반</option>
-					<option value={10}>10반</option>
-					<option value={11}>11반</option>
-					<option value={12}>12반</option>
-				</select>
-
-				<button type="submit">회원가입</button>
+				<button
+					type="submit"
+					className="bg-orange-400 p-2 text-white hover:bg-orange-500 transition duration-200 rounded-full mt-4"
+				>
+					회원가입
+				</button>
 			</form>
 		</div>
 	)

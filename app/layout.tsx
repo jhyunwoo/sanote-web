@@ -232,7 +232,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="kr">
-			<body>
+			<body className="scrollbar-hide">
 				<Recoil>{children}</Recoil>
 			</body>
 		</html>
