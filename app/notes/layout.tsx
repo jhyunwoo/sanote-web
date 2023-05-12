@@ -1,6 +1,7 @@
 import BottomBar from "../components/BottomBar"
 import HeadBar from "../components/HeadBar"
 import ProtectedPage from "../components/ProtectedPage"
+import Layout from "@/app/components/Layout";
 
 export default function NoteLayout({ children }: { children: React.ReactNode }) {
 	return (
@@ -8,7 +9,7 @@ export default function NoteLayout({ children }: { children: React.ReactNode }) 
 			<ProtectedPage />
 			<HeadBar />
 			<BottomBar />
-			{children}
+			<Layout>{children}</Layout>
 		</div>
 	)
 }
