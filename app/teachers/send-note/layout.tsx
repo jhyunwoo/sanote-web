@@ -3,12 +3,10 @@ import TeachersBottomBar from "../../components/TeachersBottomBar"
 
 export default function TeachersLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="kr">
-			<body className="bg-slate-50">
-				<HeadBar />
-				<TeachersBottomBar />
-				{children}
-			</body>
-		</html>
+		<section className="bg-slate-50">
+			<HeadBar />
+			<TeachersBottomBar />
+			{children}
+		</section>
 	)
 }

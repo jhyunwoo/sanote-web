@@ -5,7 +5,7 @@ import NoteList from "./NoteList"
 
 export default function Home() {
 	return (
-		<div className="w-full min-h-screen p-4 bg-slate-50 flex flex-col pt-16">
+		<div className="w-full min-h-screen p-4 bg-slate-50 flex flex-col py-16">
 			<ProtectedPage />
 			<HeadBar />
 			<BottomBar />
