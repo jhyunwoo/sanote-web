@@ -17,7 +17,7 @@ export default function TeachersProtectedPage() {
 		} else if (pb.authStore.model.type === "student") {
 			router.replace("/")
 		}
-	}, [user])
+	}, [router, user])
 	useEffect(() => {
 		async function getUserDate() {
 			if (pb.authStore.model?.id) {
@@ -40,6 +40,6 @@ export default function TeachersProtectedPage() {
 			}
 		}
 		getUserDate()
-	}, [])
+	}, [setUser, user.id])
 	return <></>
 }
