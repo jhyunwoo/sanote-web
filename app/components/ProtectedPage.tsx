@@ -17,6 +17,6 @@ export default function ProtectedPage() {
 		} else if (pb.authStore.model.type === "teacher") {
 			router.replace("/teachers")
 		}
-	}, [user])
+	}, [router, user])
 	return <></>
 }
