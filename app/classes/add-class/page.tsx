@@ -69,19 +69,19 @@ export default function AddClass() {
 					className={`${year === date.getFullYear() - 1 ? "bg-orange-300 text-white" : ""} p-1 px-4 rounded-full`}
 					onClick={() => setYear(date.getFullYear() - 1)}
 				>
-					{date.getFullYear() - 1}년
+					{date.getFullYear() - 1}
 				</button>
 				<button
 					className={`${year === date.getFullYear() ? "bg-orange-300 text-white" : ""} p-1 px-4 rounded-full`}
 					onClick={() => setYear(date.getFullYear())}
 				>
-					{date.getFullYear()}년
+					{date.getFullYear()}
 				</button>
 				<button
 					className={`${year === date.getFullYear() + 1 ? "bg-orange-300 text-white" : ""} p-1 px-4 rounded-full`}
 					onClick={() => setYear(date.getFullYear() + 1)}
 				>
-					{date.getFullYear() + 1}년
+					{date.getFullYear() + 1}
 				</button>
 			</div>
 			<div className="flex justify-start space-x-2 p-2">

@@ -2,8 +2,10 @@
 
 import pb from "@/lib/pocketbase"
 import { BellIcon } from "@heroicons/react/24/outline"
+import { useRouter } from "next/navigation"
 
 export default function Push() {
+	const router = useRouter()
 	async function pushInfo(subscription: PushSubscription) {
 		if (pb.authStore.model?.id) {
 			const jsonPushInfo = JSON.stringify(subscription)
@@ -18,8 +20,13 @@ export default function Push() {
 
 			try {
 				await pb.collection("pushInfos").create(data)
+				window.localStorage.setItem("pushInfo", "true")
+				alert("등록되었습니다.")
+				router.push("/notes")
 			} catch (e) {
+				window.localStorage.setItem("pushInfo", "true")
 				alert("이미 등록되었습니다.")
+				router.push("/notes")
 			}
 		}
 	}
@@ -44,8 +51,12 @@ export default function Push() {
 		})
 	}
 	return (
-		<button onClick={register}>
-			<BellIcon className="w-6 h-6 text-orange-800" />
+		<button
+			onClick={register}
+			className="p-1 bg-orange-400 hover:bg-orange-500 transition duration-200 text-white flex items-center justify-center rounded-full mt-2"
+		>
+			<BellIcon className="w-6 h-6" />
+			<div className="font-semibold">알림 등록</div>
 		</button>
 	)
 }

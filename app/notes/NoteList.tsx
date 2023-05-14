@@ -5,11 +5,13 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useRecoilValue } from "recoil"
 import { userInfo } from "@/lib/recoil"
+import { useRouter } from "next/navigation"
 
 export default function NoteList() {
 	const [notes, setNotes] = useState<any[]>()
 
 	const user = useRecoilValue(userInfo)
+	const router = useRouter()
 
 	function getDate(isoDate: string) {
 		if (isoDate) {
@@ -19,6 +21,11 @@ export default function NoteList() {
 	}
 
 	useEffect(() => {
+		async function checkPush() {
+			if (window.localStorage.getItem("pushInfo") !== "true") {
+				router.push("/setup")
+			}
+		}
 		async function getNotes() {
 			const resultList = await pb
 				.collection("notes")
@@ -26,10 +33,12 @@ export default function NoteList() {
 			setNotes(resultList?.items)
 		}
 		getNotes()
-	}, [])
+		checkPush()
+	}, [router])
 
 	return (
 		<div className="grid grid-cols-1 gap-2">
+			{notes?.length === 0 && <div className="mx-auto mt-12 text-slate-600">아직 받은 쪽지가 없습니다.</div>}
 			{notes?.map((data, key) => (
 				<Link
 					href={`/notes/${data.id}`}

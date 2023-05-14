@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import pb from "@/lib/pocketbase"
 import { useSetRecoilState } from "recoil"
 import { userInfo } from "@/lib/recoil"
+import Link from "next/link"
 
 type Inputs = {
 	email: string
@@ -14,6 +15,7 @@ type Inputs = {
 	studentId: number
 	year: number
 	class: number
+	privacy: boolean
 }
 
 export default function SignUpInputArea() {
@@ -175,6 +177,18 @@ export default function SignUpInputArea() {
 						12반
 					</option>
 				</select>
+				<div className="text-base font-semibold mt-2">서비스 이용 약관</div>
+				<Link href={"/privacy"} className="text-orange-500">
+					약관 보기
+				</Link>
+				<div className="flex space-x-1">
+					<input
+						type="checkbox"
+						{...register("privacy", { required: { value: true, message: "약관에 동의해야합니다." } })}
+					/>
+					<div>동의</div>
+				</div>
+				{errors.privacy && <span className="text-sm text-red-400">{errors.privacy.message}</span>}
 
 				<button
 					type="submit"

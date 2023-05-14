@@ -4,7 +4,7 @@ import SignInInputArea from "./InputArea"
 export default function SignIn() {
 	return (
 		<div className="bg-slate-50 w-full min-h-screen p-4 flex flex-col justify-center items-center">
-			<div className="bg-white p-4 w-4/5 rounded-lg flex flex-col justify-center items-center">
+			<div className="bg-white p-4 w-5/6 rounded-lg flex flex-col justify-center items-center">
 				<div className="text-xl font-semibold m-4">로그인</div>
 				<SignInInputArea />
 			</div>
