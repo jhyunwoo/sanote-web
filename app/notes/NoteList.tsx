@@ -22,7 +22,7 @@ export default function NoteList() {
 
 	useEffect(() => {
 		async function checkPush() {
-			if (window.localStorage.getItem("pushInfo") !== "true") {
+			if (window.localStorage.getItem("pushInfo") !== "true" && pb.authStore.model?.id) {
 				router.push("/setup")
 			}
 		}

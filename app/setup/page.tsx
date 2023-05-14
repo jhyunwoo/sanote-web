@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Push from "../components/Push"
+import Link from "next/link"
 
 function PushNotification() {
 	return (
@@ -13,6 +14,9 @@ function PushNotification() {
 			</div>
 			<div className="my-2 font-semibold">(iOS & iPad OS는 16.4 이상의 버전이 필요합니다.)</div>
 			<Push />
+			<Link href={"/notes"} className="text-orange-500 font-semibold  hover:text-orange-600 transition duration-200">
+				홈페이지로 이동
+			</Link>
 		</div>
 	)
 }

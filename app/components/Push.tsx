@@ -2,10 +2,8 @@
 
 import pb from "@/lib/pocketbase"
 import { BellIcon } from "@heroicons/react/24/outline"
-import { useRouter } from "next/navigation"
 
 export default function Push() {
-	const router = useRouter()
 	async function pushInfo(subscription: PushSubscription) {
 		if (pb.authStore.model?.id) {
 			const jsonPushInfo = JSON.stringify(subscription)
@@ -21,12 +19,8 @@ export default function Push() {
 			try {
 				await pb.collection("pushInfos").create(data)
 				window.localStorage.setItem("pushInfo", "true")
-
-				router.push("/notes")
 			} catch (e) {
 				window.localStorage.setItem("pushInfo", "true")
-
-				router.push("/notes")
 			}
 		}
 	}
