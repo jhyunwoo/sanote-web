@@ -1,5 +1,6 @@
 "use client"
 
+import ProfilePush from "@/app/components/ProfilePush"
 import pb from "@/lib/pocketbase"
 import { userInfo } from "@/lib/recoil"
 import { useRouter } from "next/navigation"
@@ -32,6 +33,7 @@ export default function UserInfo() {
 				<div className="text-xl font-semibold mb-2">{user?.name} 선생님</div>
 				<div className="ml-auto text-base">{user?.department}</div>
 				<div className="ml-auto text-base">{user?.email}</div>
+				<ProfilePush />
 			</div>
 			<button
 				onClick={() => router.push("/teachers/user/change-password")}
