@@ -9,7 +9,10 @@ import { isNoti } from "@/lib/recoil"
 function PushNotification() {
 	const [noti, setNoti] = useRecoilState(isNoti)
 	useEffect(() => {
-		if (Notification) {
+		const agent = navigator.userAgent.toLowerCase()
+		if (agent.includes("iphone") || agent.includes("ipad") || agent.includes("ipod")) {
+			return
+		} else {
 			try {
 				if (Notification?.permission === "granted") {
 					setNoti(true)

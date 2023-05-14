@@ -3,11 +3,13 @@
 import pb from "@/lib/pocketbase"
 import { isNoti } from "@/lib/recoil"
 import { BellIcon } from "@heroicons/react/24/outline"
+import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useRecoilState } from "recoil"
 
 export default function Push() {
 	const [noti, setNoti] = useRecoilState(isNoti)
+	const router = useRouter()
 
 	async function pushInfo(subscription: PushSubscription) {
 		if (pb.authStore.model?.id) {
@@ -55,10 +57,20 @@ export default function Push() {
 		})
 	}
 	useEffect(() => {
-		if (Notification?.permission === "granted") {
-			setNoti(true)
+		const agent = navigator.userAgent.toLowerCase()
+		if (agent.includes("iphone") || agent.includes("ipad") || agent.includes("ipod")) {
+			window.localStorage.setItem("pushInfo", "true")
+			router.push("/notes")
 		} else {
-			setNoti(false)
+			try {
+				if (Notification?.permission === "granted") {
+					setNoti(true)
+				} else {
+					setNoti(false)
+				}
+			} catch {
+				setNoti(false)
+			}
 		}
 	}, [])
 
