@@ -3,9 +3,11 @@
 import { useEffect, useState } from "react"
 import Push from "../components/Push"
 import Link from "next/link"
+import { useRecoilState } from "recoil"
+import { isNoti } from "@/lib/recoil"
 
 function PushNotification() {
-	const [noti, setNoti] = useState<boolean>()
+	const [noti, setNoti] = useRecoilState(isNoti)
 	useEffect(() => {
 		if (Notification?.permission === "granted") {
 			setNoti(true)
@@ -22,7 +24,7 @@ function PushNotification() {
 			</div>
 			<div className="my-2 font-semibold">(iOS & iPad OS는 16.4 이상의 버전이 필요합니다.)</div>
 
-			{noti ? (
+			{!noti ? (
 				<Push />
 			) : (
 				<Link

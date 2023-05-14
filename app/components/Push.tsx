@@ -1,11 +1,13 @@
 "use client"
 
 import pb from "@/lib/pocketbase"
+import { isNoti } from "@/lib/recoil"
 import { BellIcon } from "@heroicons/react/24/outline"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
+import { useRecoilState } from "recoil"
 
 export default function Push() {
-	const [noti, setNoti] = useState<boolean>()
+	const [noti, setNoti] = useRecoilState(isNoti)
 
 	async function pushInfo(subscription: PushSubscription) {
 		if (pb.authStore.model?.id) {
@@ -23,9 +25,11 @@ export default function Push() {
 				await pb.collection("pushInfos").create(data)
 				window.localStorage.setItem("pushInfo", "true")
 				console.log("push new")
+				setNoti(true)
 			} catch (e) {
 				window.localStorage.setItem("pushInfo", "true")
 				console.log("push old")
+				setNoti(true)
 			}
 		}
 	}
@@ -33,6 +37,7 @@ export default function Push() {
 	function register() {
 		navigator.serviceWorker.ready.then((registration) => {
 			registration.pushManager.getSubscription().then(async (subscription) => {
+				console.log(subscription)
 				if (subscription) {
 					pushInfo(subscription)
 				} else {
@@ -59,7 +64,7 @@ export default function Push() {
 
 	return (
 		<div className="w-full">
-			{noti ? (
+			{!noti ? (
 				<button
 					onClick={register}
 					className="p-1 bg-orange-400 hover:bg-orange-500 transition duration-200 text-white flex items-center justify-center rounded-full mt-2 px-4 mx-auto"
