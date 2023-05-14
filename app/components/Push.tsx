@@ -21,11 +21,11 @@ export default function Push() {
 			try {
 				await pb.collection("pushInfos").create(data)
 				window.localStorage.setItem("pushInfo", "true")
-				alert("등록되었습니다.")
+
 				router.push("/notes")
 			} catch (e) {
 				window.localStorage.setItem("pushInfo", "true")
-				alert("이미 등록되었습니다.")
+
 				router.push("/notes")
 			}
 		}

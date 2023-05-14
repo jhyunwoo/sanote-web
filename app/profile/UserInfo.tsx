@@ -4,6 +4,7 @@ import pb from "@/lib/pocketbase"
 import { userInfo } from "@/lib/recoil"
 import { useRouter } from "next/navigation"
 import { useRecoilState } from "recoil"
+import Push from "../components/Push"
 
 export default function UserInfo() {
 	const [user, setUser] = useRecoilState(userInfo)
@@ -32,6 +33,7 @@ export default function UserInfo() {
 				<div className="text-xl font-semibold mb-2">{user?.name}</div>
 				<div className="text-base">{user?.email}</div>
 				<div className="text-base">학번: {user?.studentId}</div>
+				<Push />
 			</div>
 			<button
 				onClick={() => router.push("/profile/change-password")}
