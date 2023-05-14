@@ -47,19 +47,23 @@ export default function Push() {
 			})
 		})
 	}
-	return (
-		<div className="w-full">
-			{Notification?.permission !== "granted" ? (
-				<button
-					onClick={register}
-					className="p-1 bg-orange-400 hover:bg-orange-500 transition duration-200 text-white flex items-center justify-center rounded-full mt-2 px-4 mx-auto"
-				>
-					<BellIcon className="w-6 h-6" />
-					<div className="font-semibold">알림 등록</div>
-				</button>
-			) : (
-				""
-			)}
-		</div>
-	)
+	if (Notification !== undefined) {
+		return (
+			<div className="w-full">
+				{Notification?.permission !== "granted" ? (
+					<button
+						onClick={register}
+						className="p-1 bg-orange-400 hover:bg-orange-500 transition duration-200 text-white flex items-center justify-center rounded-full mt-2 px-4 mx-auto"
+					>
+						<BellIcon className="w-6 h-6" />
+						<div className="font-semibold">알림 등록</div>
+					</button>
+				) : (
+					""
+				)}
+			</div>
+		)
+	} else {
+		return <div></div>
+	}
 }
