@@ -57,12 +57,7 @@ export default function Push() {
 		})
 	}
 	useEffect(() => {
-		const agent = navigator.userAgent.toLowerCase()
-		console.log(agent)
-		if (agent.includes("iphone") || agent.includes("ipad") || agent.includes("ipod") || agent.includes("macintosh")) {
-			window.localStorage.setItem("pushInfo", "true")
-			router.push("/notes")
-		} else {
+		if ("standalone" in window.navigator) {
 			try {
 				if (Notification?.permission === "granted") {
 					setNoti(true)
@@ -71,6 +66,23 @@ export default function Push() {
 				}
 			} catch {
 				setNoti(false)
+			}
+		} else {
+			const agent = navigator.userAgent.toLowerCase()
+			console.log(agent)
+			if (agent.includes("iphone") || agent.includes("ipad") || agent.includes("ipod") || agent.includes("macintosh")) {
+				window.localStorage.setItem("pushInfo", "true")
+				router.push("/notes")
+			} else {
+				try {
+					if (Notification?.permission === "granted") {
+						setNoti(true)
+					} else {
+						setNoti(false)
+					}
+				} catch {
+					setNoti(false)
+				}
 			}
 		}
 	}, [router, setNoti])

@@ -9,10 +9,7 @@ import { isNoti } from "@/lib/recoil"
 function PushNotification() {
 	const [noti, setNoti] = useRecoilState(isNoti)
 	useEffect(() => {
-		const agent = navigator.userAgent.toLowerCase()
-		if (agent.includes("iphone") || agent.includes("ipad") || agent.includes("ipod") || agent.includes("macintosh")) {
-			return
-		} else {
+		if ("standalone" in window.navigator) {
 			try {
 				if (Notification?.permission === "granted") {
 					setNoti(true)
@@ -21,6 +18,21 @@ function PushNotification() {
 				}
 			} catch {
 				setNoti(false)
+			}
+		} else {
+			const agent = navigator.userAgent.toLowerCase()
+			if (agent.includes("iphone") || agent.includes("ipad") || agent.includes("ipod") || agent.includes("macintosh")) {
+				return
+			} else {
+				try {
+					if (Notification?.permission === "granted") {
+						setNoti(true)
+					} else {
+						setNoti(false)
+					}
+				} catch {
+					setNoti(false)
+				}
 			}
 		}
 	}, [])
