@@ -5,6 +5,7 @@ import pb from "@/lib/pocketbase"
 import Link from "next/link"
 import { useRecoilValue } from "recoil"
 import { userInfo } from "@/lib/recoil"
+import { useRouter } from "next/navigation"
 
 export default function NoteList() {
 	const [notes, setNotes] = useState<any[]>()
@@ -13,9 +14,15 @@ export default function NoteList() {
 		return new Intl.DateTimeFormat("ko-KR").format(date)
 	}
 
+	const router = useRouter()
 	const user = useRecoilValue(userInfo)
 
 	useEffect(() => {
+		async function checkPush() {
+			if (window.localStorage.getItem("pushInfo") !== "true" && pb.authStore.model?.id) {
+				router.push("/teachers/setup")
+			}
+		}
 		async function getNotes() {
 			const records = await pb.collection("notes").getFullList({
 				filter: `receiver~"${pb.authStore.model?.id}"`,
@@ -25,7 +32,8 @@ export default function NoteList() {
 			setNotes(records)
 		}
 		getNotes()
-	}, [])
+		checkPush()
+	}, [router])
 
 	return (
 		<div className="w-full">
