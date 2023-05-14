@@ -1,10 +1,11 @@
-import SignOut from "./SignOut"
+import ProtectedPage from "../components/ProtectedPage"
+import UserInfo from "./UserInfo"
 
 export default function Profile() {
 	return (
 		<div>
-			<div>Profile Page</div>
-			<SignOut />
+			<ProtectedPage />
+			<UserInfo />
 		</div>
 	)
 }

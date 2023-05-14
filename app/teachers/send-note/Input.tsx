@@ -81,7 +81,6 @@ export default function Input() {
 				}
 			}
 			let receiverInfo = []
-			console.log(receiver, receiveClass)
 			for (let n = 0; n < receiver?.length; n++) {
 				receiverInfo.push(receiver[n].id)
 			}
@@ -111,12 +110,10 @@ export default function Input() {
 			}
 
 			const record = await pb.collection("notes").create(noteData)
-			console.log(record)
 			const result = await axios.post("/teachers/send-note/send-push", {
 				note: data,
 				users: pushInfos,
 			})
-			console.log(result)
 			router.push("/teachers")
 		}
 	}

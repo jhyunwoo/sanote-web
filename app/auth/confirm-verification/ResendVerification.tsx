@@ -1,18 +1,25 @@
 "use client"
 
 import pb from "@/lib/pocketbase"
+import { userInfo } from "@/lib/recoil"
+import { useRecoilValue } from "recoil"
 
 export default function ResendVerification() {
+	const user = useRecoilValue(userInfo)
 	async function resend() {
-		try {
-			await pb.collection("users").requestVerification(pb?.authStore?.model?.email)
-			alert("이메일을 다시 확인해주세요.")
-		} catch {
+		if (user.email) {
+			try {
+				await pb.collection("users").requestVerification(user?.email)
+				alert("이메일 전송을 완료했습니다.")
+			} catch {
+				alert("로그인 정보가 없어 메일을 보낼 수 없습니다.")
+			}
+		} else {
 			alert("로그인 정보가 없어 메일을 보낼 수 없습니다.")
 		}
 	}
 	return (
-		<div className="bg-orange-400 hover:bg-orange-500 transition duration-200 p-2 px-6 rounded-full mt-4 text-white">
+		<div className="text-orange-400 hover:text-orange-500 transition duration-200 p-2 px-6 rounded-full mt-4 text-sm">
 			<button onClick={resend}>인증 메일 다시 보내기</button>
 		</div>
 	)

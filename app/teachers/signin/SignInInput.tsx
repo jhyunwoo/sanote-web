@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { useSetRecoilState } from "recoil"
 import pb from "@/lib/pocketbase"
 import { userInfo } from "@/lib/recoil"
+import { useState } from "react"
 
 type Inputs = {
 	email: string
@@ -19,30 +20,34 @@ export default function SignInInput() {
 	} = useForm<Inputs>()
 	const router = useRouter()
 	const setUser = useSetRecoilState(userInfo)
+	const [error, setError] = useState("")
 
 	const onSubmit: SubmitHandler<Inputs> = async (data) => {
-		console.log(data)
-		const authData = await pb.collection("users").authWithPassword(data.email, data.password)
-		if (authData.token) {
-			setUser({
-				id: authData.record.id,
-				username: authData.record.username,
-				email: authData.record.email,
-				name: authData.record.name,
-				avatar: authData.record.avatar,
-				type: authData.record.type,
-				studentId: authData.record.studentId,
-				year: authData.record.year,
-				class: authData.record.class,
-				department: authData.record.department,
-				valid: authData.record.valid,
-			})
-			router.replace("/teachers")
+		try {
+			const authData = await pb.collection("users").authWithPassword(data.email, data.password)
+			if (authData.token) {
+				setUser({
+					id: authData.record.id,
+					username: authData.record.username,
+					email: authData.record.email,
+					name: authData.record.name,
+					avatar: authData.record.avatar,
+					type: authData.record.type,
+					studentId: authData.record.studentId,
+					year: authData.record.year,
+					class: authData.record.class,
+					department: authData.record.department,
+					valid: authData.record.valid,
+				})
+				router.replace("/teachers")
+			}
+		} catch {
+			setError("이메일 또는 비밀번호가 일치하지 않습니다.")
 		}
 	}
 
 	return (
-		<div className="w-full flex flex-col items-center bg-white p-4 px-12 rounded-xl shadow-xl">
+		<div className="w-5/6 flex flex-col items-center bg-white p-4  rounded-xl shadow-xl">
 			<div className="text-xl font-bold m-4">로그인</div>
 			<form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col">
 				<div className="font-semibold text-base">이메일</div>
@@ -56,7 +61,7 @@ export default function SignInInput() {
 					})}
 					className="outline-none ring-1 ring-orange-300 hover:ring-offset-1 transition duration-200 p-1 px-2 rounded-lg my-1"
 				/>
-				{errors.email && <span className="text-sm text-rose-400">{errors.email.message}</span>}
+				{errors.email && <span className="text-sm text-red-500">{errors.email.message}</span>}
 				<div className="font-semibold text-base">비밀번호</div>
 				<input
 					type="password"
@@ -68,8 +73,8 @@ export default function SignInInput() {
 					})}
 					className="outline-none ring-1 ring-orange-300 hover:ring-offset-1 transition duration-200 p-1 px-2 rounded-lg my-1"
 				/>
-				{errors.password && <span className="text-sm text-rose-400">{errors.password.message}</span>}
-
+				{errors.password && <span className="text-sm text-red-500">{errors.password.message}</span>}
+				<div className="text-sm text-red-500">{error}</div>
 				<button
 					type="submit"
 					className=" my-2 bg-orange-400 hover:bg-orange-300 p-1 px-2 rounded-full text-white font-semibold transition duration-200"

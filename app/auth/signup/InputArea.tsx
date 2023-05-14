@@ -3,6 +3,8 @@
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import pb from "@/lib/pocketbase"
+import { useSetRecoilState } from "recoil"
+import { userInfo } from "@/lib/recoil"
 
 type Inputs = {
 	email: string
@@ -21,26 +23,45 @@ export default function SignUpInputArea() {
 		formState: { errors },
 	} = useForm<Inputs>()
 	const router = useRouter()
+	const setUser = useSetRecoilState(userInfo)
 
 	const onSubmit: SubmitHandler<Inputs> = async (data) => {
 		if (data.password === data.passwordConfirm) {
-			const userData = {
-				email: data.email,
-				emailVisibility: true,
-				password: data.password,
-				passwordConfirm: data.passwordConfirm,
-				name: data.name,
-				type: "student",
-				studentId: Number(data.studentId),
-				year: Number(data.year),
-				class: Number(data.class),
-			}
-			const record = await pb.collection("users").create(userData)
-			if (record?.id) {
-				await pb.collection("users").requestVerification(data.email)
-				router.replace("/")
+			const checkStudentId = await pb.collection("users").getFullList({ filter: `studentId="${data.studentId}"` })
+			if (checkStudentId.length === 0) {
+				const userData = {
+					email: data.email,
+					emailVisibility: true,
+					password: data.password,
+					passwordConfirm: data.passwordConfirm,
+					name: data.name,
+					type: "student",
+					studentId: Number(data.studentId),
+					year: Number(data.year),
+					class: Number(data.class),
+				}
+				const record = await pb.collection("users").create(userData)
+				if (record?.id) {
+					setUser({
+						id: record.id,
+						username: record.username,
+						email: record.email,
+						name: record.name,
+						avatar: record.avatar,
+						type: record.type,
+						studentId: record.studentId,
+						year: record.year,
+						class: record.class,
+						department: record.department,
+						valid: record.valid,
+					})
+					await pb.collection("users").requestVerification(data.email)
+					router.replace("/auth/confirm-verification")
+				} else {
+					console.log("error")
+				}
 			} else {
-				console.log("error")
+				alert("이미 등록한 학번입니다.")
 			}
 		} else {
 			alert("비밀번호가 일치하지 않습니다.")

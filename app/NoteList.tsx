@@ -3,14 +3,13 @@
 import pb from "@/lib/pocketbase"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import {useRecoilValue} from "recoil";
-import {userInfo} from "@/lib/recoil";
+import { useRecoilValue } from "recoil"
+import { userInfo } from "@/lib/recoil"
 
 export default function NoteList() {
 	const [notes, setNotes] = useState<any[]>()
 
 	const user = useRecoilValue(userInfo)
-	console.log(user)
 
 	function getDate(isoDate: string) {
 		if (isoDate) {
@@ -21,8 +20,9 @@ export default function NoteList() {
 
 	useEffect(() => {
 		async function getNotes() {
-			const resultList = await pb.collection("notes").getList(1, 50, { expand: "sender", sort: "-created" })
-			console.log(resultList)
+			const resultList = await pb
+				.collection("notes")
+				.getList(1, 50, { expand: "sender", sort: "-created", filter: `receiver~"${pb.authStore.model?.id}"` })
 			setNotes(resultList?.items)
 		}
 		getNotes()

@@ -30,7 +30,7 @@ export default function Input() {
 
 		const record = await pb.collection("classes").create(classData)
 		if (record.id) {
-			router.push("/teachers")
+			router.push("/teachers/classes")
 		} else {
 			console.log(record)
 		}
