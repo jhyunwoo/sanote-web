@@ -13,10 +13,17 @@ function PushNotification() {
 				등록을 해주세요.
 			</div>
 			<div className="my-2 font-semibold">(iOS & iPad OS는 16.4 이상의 버전이 필요합니다.)</div>
-			<Push />
-			<Link href={"/notes"} className="text-orange-500 font-semibold  hover:text-orange-600 transition duration-200">
-				홈페이지로 이동
-			</Link>
+			{Notification?.permission !== "granted" ? (
+				<Push />
+			) : (
+				<Link
+					href="/notes"
+					className="bg-orange-400 hover:bg-orange-500 transition duration-200 rounded-full text-white text-center font-semibold p-1"
+					onClick={() => window.localStorage.setItem("pushInfo", "true")}
+				>
+					홈으로
+				</Link>
+			)}
 		</div>
 	)
 }
