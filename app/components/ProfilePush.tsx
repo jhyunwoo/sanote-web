@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useRecoilState } from "recoil"
 
-export default function Push() {
+export default function ProfilePush() {
 	const [noti, setNoti] = useRecoilState(isNoti)
 	const router = useRouter()
 
@@ -37,31 +37,36 @@ export default function Push() {
 	}
 
 	function register() {
-		navigator.serviceWorker.ready.then((registration) => {
-			registration.pushManager.getSubscription().then(async (subscription) => {
-				console.log(subscription)
-				if (subscription) {
-					pushInfo(subscription)
-				} else {
-					registration.pushManager
-						.subscribe({
-							userVisibleOnly: true,
-							applicationServerKey:
-								"BCVNyyitZCQORywJsVmjfM4nd1Ptr4t9wbiYS4oUADsw79qKnL7mzezHbgQLXqnBbICpL8ayuLO5WH2wDwyXkIE",
-						})
-						.then(async (subscription) => {
-							pushInfo(subscription)
-						})
-				}
+		const agent = navigator.userAgent.toLowerCase()
+
+		if (agent.includes("iphone") || agent.includes("ipad") || agent.includes("ipod") || agent.includes("macintosh")) {
+			alert("iOS 또는 iPad OS에서는 홈 화면에 웹사이트를 추가해야 알림을 받을 수 있습니다.")
+		} else {
+			navigator.serviceWorker.ready.then((registration) => {
+				registration.pushManager.getSubscription().then(async (subscription) => {
+					console.log(subscription)
+					if (subscription) {
+						pushInfo(subscription)
+					} else {
+						registration.pushManager
+							.subscribe({
+								userVisibleOnly: true,
+								applicationServerKey:
+									"BCVNyyitZCQORywJsVmjfM4nd1Ptr4t9wbiYS4oUADsw79qKnL7mzezHbgQLXqnBbICpL8ayuLO5WH2wDwyXkIE",
+							})
+							.then(async (subscription) => {
+								pushInfo(subscription)
+							})
+					}
+				})
 			})
-		})
+		}
 	}
 	useEffect(() => {
 		const agent = navigator.userAgent.toLowerCase()
-		console.log(agent)
+
 		if (agent.includes("iphone") || agent.includes("ipad") || agent.includes("ipod") || agent.includes("macintosh")) {
 			window.localStorage.setItem("pushInfo", "true")
-			router.push("/notes")
 		} else {
 			try {
 				if (Notification?.permission === "granted") {

@@ -10,7 +10,7 @@ function PushNotification() {
 	const [noti, setNoti] = useRecoilState(isNoti)
 	useEffect(() => {
 		const agent = navigator.userAgent.toLowerCase()
-		if (agent.includes("iphone") || agent.includes("ipad") || agent.includes("ipod")) {
+		if (agent.includes("iphone") || agent.includes("ipad") || agent.includes("ipod") || agent.includes("macintosh")) {
 			return
 		} else {
 			try {
