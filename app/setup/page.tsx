@@ -39,6 +39,13 @@ function PushNotification() {
 					홈으로
 				</Link>
 			)}
+			<Link
+				href="/notes"
+				className="p-2 text-center font-semibold text-red-400 hover:text-red-500 transition duration-200 rounded-full text-base"
+				onClick={() => window.localStorage.setItem("pushInfo", "true")}
+			>
+				공용 PC에서 로그인함
+			</Link>
 		</div>
 	)
 }

@@ -67,7 +67,7 @@ export default function Push() {
 			{!noti ? (
 				<button
 					onClick={register}
-					className="p-1 bg-orange-400 hover:bg-orange-500 transition duration-200 text-white flex items-center justify-center rounded-full mt-2 px-4 mx-auto"
+					className="p-1 bg-orange-400 hover:bg-orange-500 transition duration-200 text-white flex items-center justify-center rounded-full mt-2 mx-auto w-full"
 				>
 					<BellIcon className="w-6 h-6" />
 					<div className="font-semibold">알림 등록</div>
