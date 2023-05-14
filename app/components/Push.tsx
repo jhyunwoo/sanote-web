@@ -2,9 +2,11 @@
 
 import pb from "@/lib/pocketbase"
 import { BellIcon } from "@heroicons/react/24/outline"
-import Link from "next/link"
+import { useEffect, useState } from "react"
 
 export default function Push() {
+	const [noti, setNoti] = useState<boolean>()
+
 	async function pushInfo(subscription: PushSubscription) {
 		if (pb.authStore.model?.id) {
 			const jsonPushInfo = JSON.stringify(subscription)
@@ -47,23 +49,27 @@ export default function Push() {
 			})
 		})
 	}
-	if (Notification !== undefined) {
-		return (
-			<div className="w-full">
-				{Notification?.permission !== "granted" ? (
-					<button
-						onClick={register}
-						className="p-1 bg-orange-400 hover:bg-orange-500 transition duration-200 text-white flex items-center justify-center rounded-full mt-2 px-4 mx-auto"
-					>
-						<BellIcon className="w-6 h-6" />
-						<div className="font-semibold">알림 등록</div>
-					</button>
-				) : (
-					""
-				)}
-			</div>
-		)
-	} else {
-		return <div></div>
-	}
+	useEffect(() => {
+		if (Notification?.permission === "granted") {
+			setNoti(true)
+		} else {
+			setNoti(false)
+		}
+	}, [])
+
+	return (
+		<div className="w-full">
+			{noti ? (
+				<button
+					onClick={register}
+					className="p-1 bg-orange-400 hover:bg-orange-500 transition duration-200 text-white flex items-center justify-center rounded-full mt-2 px-4 mx-auto"
+				>
+					<BellIcon className="w-6 h-6" />
+					<div className="font-semibold">알림 등록</div>
+				</button>
+			) : (
+				""
+			)}
+		</div>
+	)
 }

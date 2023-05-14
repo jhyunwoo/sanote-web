@@ -1,10 +1,18 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Push from "../components/Push"
 import Link from "next/link"
 
 function PushNotification() {
+	const [noti, setNoti] = useState<boolean>()
+	useEffect(() => {
+		if (Notification?.permission === "granted") {
+			setNoti(true)
+		} else {
+			setNoti(false)
+		}
+	}, [])
 	return (
 		<div className="bg-white p-4 rounded-xl shadow-lg flex flex-col">
 			<div className="text-xl font-bold">Step 2 알림 설정</div>
@@ -13,20 +21,17 @@ function PushNotification() {
 				등록을 해주세요.
 			</div>
 			<div className="my-2 font-semibold">(iOS & iPad OS는 16.4 이상의 버전이 필요합니다.)</div>
-			{Notification !== undefined ? (
-				Notification?.permission !== "granted" ? (
-					<Push />
-				) : (
-					<Link
-						href="/notes"
-						className="bg-orange-400 hover:bg-orange-500 transition duration-200 rounded-full text-white text-center font-semibold p-1"
-						onClick={() => window.localStorage.setItem("pushInfo", "true")}
-					>
-						홈으로
-					</Link>
-				)
+
+			{noti ? (
+				<Push />
 			) : (
-				""
+				<Link
+					href="/notes"
+					className="bg-orange-400 hover:bg-orange-500 transition duration-200 rounded-full text-white text-center font-semibold p-1"
+					onClick={() => window.localStorage.setItem("pushInfo", "true")}
+				>
+					홈으로
+				</Link>
 			)}
 		</div>
 	)
