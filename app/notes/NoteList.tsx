@@ -32,7 +32,7 @@ export default function NoteList() {
 		<div className="grid grid-cols-1 gap-2">
 			{notes?.map((data, key) => (
 				<Link
-					href={`/teachers/notes/${data.id}`}
+					href={`/notes/${data.id}`}
 					key={key}
 					className={`${
 						data.read.includes(user.id) ? "bg-slate-100 hover:bg-slate-200" : "bg-white hover:bg-orange-50"

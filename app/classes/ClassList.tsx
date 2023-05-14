@@ -38,19 +38,19 @@ export default function ClassList() {
 					className={`${year === date.getFullYear() - 1 ? "bg-orange-300 text-white" : ""} p-1 px-4 rounded-full`}
 					onClick={() => setYear(date.getFullYear() - 1)}
 				>
-					{date.getFullYear() - 1}년
+					{date.getFullYear() - 1}
 				</button>
 				<button
 					className={`${year === date.getFullYear() ? "bg-orange-300 text-white" : ""} p-1 px-4 rounded-full`}
 					onClick={() => setYear(date.getFullYear())}
 				>
-					{date.getFullYear()}년
+					{date.getFullYear()}
 				</button>
 				<button
 					className={`${year === date.getFullYear() + 1 ? "bg-orange-300 text-white" : ""} p-1 px-4 rounded-full`}
 					onClick={() => setYear(date.getFullYear() + 1)}
 				>
-					{date.getFullYear() + 1}년
+					{date.getFullYear() + 1}
 				</button>
 			</div>
 			<div className="flex justify-start space-x-2 p-2">
@@ -73,7 +73,7 @@ export default function ClassList() {
 					<Link
 						href={`/classes/${data.id}`}
 						key={key}
-						className="flex flex-col justify-between bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition duration-200"
+						className="flex flex-col justify-between bg-white p-4 rounded-xl hover:bg-slate-100 transition duration-200"
 					>
 						<div className="flex space-x-2 text-lg">
 							<div className="font-semibold">{data.title}</div>
