@@ -9,14 +9,16 @@ import { isNoti } from "@/lib/recoil"
 function PushNotification() {
 	const [noti, setNoti] = useRecoilState(isNoti)
 	useEffect(() => {
-		try {
-			if (Notification?.permission === "granted") {
-				setNoti(true)
-			} else {
+		if (Notification) {
+			try {
+				if (Notification?.permission === "granted") {
+					setNoti(true)
+				} else {
+					setNoti(false)
+				}
+			} catch {
 				setNoti(false)
 			}
-		} catch {
-			setNoti(false)
 		}
 	}, [])
 	return (
