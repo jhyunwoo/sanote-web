@@ -96,7 +96,7 @@ export default function Input() {
 	}
 
 	return (
-		<div className="w-full flex flex-col">
+		<div className="w-full flex flex-col pb-10">
 			<form onSubmit={handleSubmit(onSubmit)} className="flex my-2 space-x-2 w-full justify-between">
 				<input
 					{...register("search")}
