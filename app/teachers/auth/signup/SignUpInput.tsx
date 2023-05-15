@@ -34,7 +34,7 @@ export default function SignUpInput() {
 		const record = await pb.collection("users").create(userData)
 		if (record.id) {
 			await pb.collection("users").requestVerification(data.email)
-			router.push("/auth/confirm-verification")
+			router.push("/teachers/auth/confirm-verification")
 		}
 	}
 

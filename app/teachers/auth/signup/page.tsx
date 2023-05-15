@@ -9,7 +9,7 @@ export default function TeachersSignUp() {
 				<SignUpInput />
 			</div>
 			<Link
-				href={"/teachers/signin"}
+				href={"/teachers/auth/signin"}
 				className="mt-8 text-orange-400 hover:text-orange-500 transition duration-200 font-semibold"
 			>
 				로그인

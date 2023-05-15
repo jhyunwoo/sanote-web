@@ -24,7 +24,7 @@ export default function ChangePassword() {
 			department: null,
 			valid: null,
 		})
-		router.replace("/auth/confirm-password-reset")
+		router.replace("/teachers/auth/confirm-password-reset")
 	}
 
 	async function requestResetPassword() {

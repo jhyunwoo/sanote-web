@@ -79,7 +79,7 @@ export default function Input() {
 				note: data,
 				users: pushInfos,
 			})
-			router.push("/teachers")
+			router.push("/notes")
 		}
 	}
 

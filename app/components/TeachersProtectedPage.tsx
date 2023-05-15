@@ -11,7 +11,7 @@ export default function TeachersProtectedPage() {
 	const router = useRouter()
 	useEffect(() => {
 		if (!pb.authStore.isValid) {
-			router.replace("/teachers/signin")
+			router.replace("/teachers/auth/signin")
 		} else if (!pb?.authStore?.model?.verified) {
 			router.replace("/auth/confirm-verification")
 		} else if (pb.authStore.model.type === "student") {

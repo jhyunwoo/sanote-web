@@ -24,7 +24,7 @@ export default function UserInfo() {
 			department: null,
 			valid: null,
 		})
-		router.replace("/teachers/signin")
+		router.replace("/teachers/auth/signin")
 	}
 
 	return (
@@ -36,7 +36,7 @@ export default function UserInfo() {
 				<ProfilePush />
 			</div>
 			<button
-				onClick={() => router.push("/teachers/user/change-password")}
+				onClick={() => router.push("/teachers/profile/change-password")}
 				className="text-orange-400 mt-8 p-1 rounded-full font-semibold hover:text-orange-500 transition duration-200"
 			>
 				비밀번호 변경
