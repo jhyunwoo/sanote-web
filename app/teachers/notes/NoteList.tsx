@@ -38,6 +38,7 @@ export default function NoteList() {
 	return (
 		<div className="w-full">
 			<div className="grid grid-cols-1 gap-3">
+				{notes?.length === 0 && <div className="mx-auto mt-12 text-slate-600">아직 받은 쪽지가 없습니다.</div>}
 				{notes?.map((data, key) => (
 					<Link
 						href={`/teachers/notes/${data.id}`}

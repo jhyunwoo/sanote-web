@@ -26,20 +26,25 @@ export default function ProfilePush() {
 			try {
 				await pb.collection("pushInfos").create(data)
 				window.localStorage.setItem("pushInfo", "true")
-				console.log("push new")
+				alert("알림이 등록되었습니다.")
 				setNoti(true)
 			} catch (e) {
 				window.localStorage.setItem("pushInfo", "true")
-				console.log("push old")
+				alert("이미 등록된 기기입니다.")
 				setNoti(true)
 			}
 		}
 	}
 
-	function register() {
+	function isIOS() {
 		const agent = navigator.userAgent.toLowerCase()
+		return agent.includes("iphone") || agent.includes("ipad") || agent.includes("ipod") || agent.includes("macintosh")
+	}
 
-		if ("standalone" in window.navigator) {
+	function register() {
+		if (isIOS() && !("standalone" in window.navigator)) {
+			alert("iOS 또는 iPad OS에서는 홈 화면에 웹사이트를 추가해야 알림을 받을 수 있습니다.")
+		} else {
 			navigator.serviceWorker.ready.then((registration) => {
 				registration.pushManager.getSubscription().then(async (subscription) => {
 					console.log(subscription)
@@ -58,36 +63,15 @@ export default function ProfilePush() {
 					}
 				})
 			})
-		} else {
-			if (agent.includes("iphone") || agent.includes("ipad") || agent.includes("ipod") || agent.includes("macintosh")) {
-				alert("iOS 또는 iPad OS에서는 홈 화면에 웹사이트를 추가해야 알림을 받을 수 있습니다.")
-			} else {
-				navigator.serviceWorker.ready.then((registration) => {
-					registration.pushManager.getSubscription().then(async (subscription) => {
-						console.log(subscription)
-						if (subscription) {
-							pushInfo(subscription)
-						} else {
-							registration.pushManager
-								.subscribe({
-									userVisibleOnly: true,
-									applicationServerKey:
-										"BCVNyyitZCQORywJsVmjfM4nd1Ptr4t9wbiYS4oUADsw79qKnL7mzezHbgQLXqnBbICpL8ayuLO5WH2wDwyXkIE",
-								})
-								.then(async (subscription) => {
-									pushInfo(subscription)
-								})
-						}
-					})
-				})
-			}
 		}
 	}
+
 	useEffect(() => {
 		const agent = navigator.userAgent.toLowerCase()
 
-		if (agent.includes("iphone") || agent.includes("ipad") || agent.includes("ipod") || agent.includes("macintosh")) {
+		if (isIOS()) {
 			window.localStorage.setItem("pushInfo", "true")
+			setNoti(true)
 		} else {
 			try {
 				if (Notification?.permission === "granted") {
