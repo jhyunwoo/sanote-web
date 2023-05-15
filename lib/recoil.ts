@@ -35,3 +35,8 @@ export const isNoti = atom<boolean>({
 	key: "isNoti",
 	default: false,
 })
+
+export const loading = atom<boolean>({
+	key: "loading",
+	default: false,
+})

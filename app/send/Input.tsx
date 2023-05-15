@@ -6,6 +6,9 @@ import axios from "axios"
 import pb from "@/lib/pocketbase"
 import { useRouter } from "next/navigation"
 import { MagnifyingGlassIcon, TrashIcon } from "@heroicons/react/24/outline"
+import { loading } from "@/lib/recoil"
+import { useRecoilState } from "recoil"
+import Loading from "../components/Loading"
 
 type Inputs = {
 	search: string
@@ -41,6 +44,8 @@ export default function Input() {
 
 	const [receiver, setReceiver] = useState<any[]>([])
 
+	const [isLoading, setIsLoading] = useRecoilState(loading)
+
 	const onSubmit: SubmitHandler<Inputs> = async (data) => {
 		const users = await pb.collection("users").getFullList({
 			filter: `name~"${data.search}" || studentId="${data.search}"`,
@@ -54,6 +59,7 @@ export default function Input() {
 	}
 
 	const onSubmitNote: SubmitHandler<NoteType> = async (data) => {
+		setIsLoading(true)
 		if (receiver?.length > 0) {
 			let pushInfos: any[] = []
 			for (let i = 0; i < receiver?.length; i++) {
@@ -81,6 +87,7 @@ export default function Input() {
 			})
 			router.push("/notes")
 		}
+		setIsLoading(false)
 	}
 
 	function addReceiver(data: any) {
@@ -97,6 +104,7 @@ export default function Input() {
 
 	return (
 		<div className="w-full flex flex-col">
+			{isLoading ? <Loading /> : ""}
 			<form onSubmit={handleSubmit(onSubmit)} className="flex my-2 space-x-2 w-full justify-between">
 				<input
 					{...register("search")}

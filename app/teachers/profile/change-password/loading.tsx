@@ -1,5 +1,5 @@
 import Loading from "../../../components/Loading"
 
-export default function TeachersNoteLoading() {
+export default function TeachersChangePasswordLoading() {
 	return <Loading />
 }
