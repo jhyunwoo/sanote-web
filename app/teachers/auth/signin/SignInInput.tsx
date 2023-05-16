@@ -2,10 +2,11 @@
 
 import { useRouter } from "next/navigation"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { useSetRecoilState } from "recoil"
+import { useRecoilState, useSetRecoilState } from "recoil"
 import pb from "@/lib/pocketbase"
-import { userInfo } from "@/lib/recoil"
-import { useState } from "react"
+import { loading, userInfo } from "@/lib/recoil"
+import { useEffect, useState } from "react"
+import Loading from "@/app/components/Loading"
 
 type Inputs = {
 	email: string
@@ -20,9 +21,12 @@ export default function SignInInput() {
 	} = useForm<Inputs>()
 	const router = useRouter()
 	const setUser = useSetRecoilState(userInfo)
+	const [isLoading, setIsLoading] = useRecoilState(loading)
 	const [error, setError] = useState("")
 
-	const onSubmit: SubmitHandler<Inputs> = async (data) => {
+	const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
+		setIsLoading(true)
+
 		try {
 			const authData = await pb.collection("users").authWithPassword(data.email, data.password)
 			if (authData.token) {
@@ -44,10 +48,12 @@ export default function SignInInput() {
 		} catch {
 			setError("이메일 또는 비밀번호가 일치하지 않습니다.")
 		}
+		setIsLoading(false)
 	}
 
 	return (
 		<div className="w-5/6 flex flex-col items-center bg-white p-4  rounded-xl shadow-xl">
+			{isLoading ? <Loading /> : ""}
 			<div className="text-xl font-bold m-4">로그인</div>
 			<form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col">
 				<div className="font-semibold text-base">이메일</div>

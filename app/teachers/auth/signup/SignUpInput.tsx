@@ -3,6 +3,9 @@
 import { useRouter } from "next/navigation"
 import { useForm, SubmitHandler } from "react-hook-form"
 import pb from "@/lib/pocketbase"
+import { loading } from "@/lib/recoil"
+import { useRecoilState } from "recoil"
+import Loading from "@/app/components/Loading"
 
 type Inputs = {
 	email: string
@@ -19,8 +22,11 @@ export default function SignUpInput() {
 		formState: { errors },
 	} = useForm<Inputs>()
 	const router = useRouter()
+	const [isLoading, setIsLoading] = useRecoilState(loading)
 
-	const onSubmit: SubmitHandler<Inputs> = async (data) => {
+	const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
+		setIsLoading(true)
+
 		const userData = {
 			email: data.email,
 			emailVisibility: true,
@@ -36,10 +42,12 @@ export default function SignUpInput() {
 			await pb.collection("users").requestVerification(data.email)
 			router.push("/teachers/auth/confirm-verification")
 		}
+		setIsLoading(false)
 	}
 
 	return (
 		<div className="px-8">
+			{isLoading ? <Loading /> : ""}
 			<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
 				<div className="font-semibold text-base mt-2">이메일</div>
 				<input

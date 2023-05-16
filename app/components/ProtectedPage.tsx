@@ -12,7 +12,6 @@ export default function ProtectedPage() {
 	useEffect(() => {
 		if (!pb.authStore.isValid) {
 			router.replace("/auth/signin")
-			console.log("work")
 		} else if (!pb?.authStore?.model?.verified) {
 			router.replace("/auth/confirm-verification")
 		} else if (pb.authStore.model.type === "teacher") {
@@ -23,28 +22,30 @@ export default function ProtectedPage() {
 	useEffect(() => {
 		async function updateUser() {
 			if (typeof pb.authStore.model?.id === "string") {
-				try {
-					const authData = await pb.collection("users").getOne(pb.authStore.model?.id)
-					setUser({
-						id: authData?.id,
-						username: authData?.username,
-						email: authData?.email,
-						name: authData?.name,
-						avatar: authData?.avatar,
-						type: authData?.type,
-						studentId: authData?.studentId,
-						year: authData?.year,
-						class: authData?.class,
-						department: authData?.department,
-						valid: authData?.valid,
-					})
-				} catch (e) {
-					console.log(e)
+				if (!user.id) {
+					try {
+						const authData = await pb.collection("users").getOne(pb.authStore.model?.id)
+						setUser({
+							id: authData?.id,
+							username: authData?.username,
+							email: authData?.email,
+							name: authData?.name,
+							avatar: authData?.avatar,
+							type: authData?.type,
+							studentId: authData?.studentId,
+							year: authData?.year,
+							class: authData?.class,
+							department: authData?.department,
+							valid: authData?.valid,
+						})
+					} catch (e) {
+						console.log(e)
+					}
 				}
 			}
 		}
 		updateUser()
-	}, [setUser])
+	}, [setUser, user.id])
 
 	return <></>
 }

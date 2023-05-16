@@ -3,8 +3,8 @@
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import pb from "@/lib/pocketbase"
-import { useSetRecoilState } from "recoil"
-import { userInfo } from "@/lib/recoil"
+import { useRecoilState, useSetRecoilState } from "recoil"
+import { loading, userInfo } from "@/lib/recoil"
 import Link from "next/link"
 
 type Inputs = {
@@ -26,9 +26,11 @@ export default function SignUpInputArea() {
 	} = useForm<Inputs>()
 	const router = useRouter()
 	const setUser = useSetRecoilState(userInfo)
+	const [isLoading, setIsLoading] = useRecoilState(loading)
 
-	const onSubmit: SubmitHandler<Inputs> = async (data) => {
+	const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
 		if (data.password === data.passwordConfirm) {
+			setIsLoading(true)
 			const checkStudentId = await pb.collection("users").getFullList({ filter: `studentId="${data.studentId}"` })
 			if (checkStudentId.length === 0) {
 				const userData = {
@@ -65,6 +67,7 @@ export default function SignUpInputArea() {
 			} else {
 				alert("이미 등록한 학번입니다.")
 			}
+			setIsLoading(false)
 		} else {
 			alert("비밀번호가 일치하지 않습니다.")
 		}
