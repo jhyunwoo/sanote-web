@@ -33,7 +33,7 @@ export default function ChangePassword() {
 	}
 
 	return (
-		<div className="w-full flex flex-col justify-center items-center m-auto bg-white p-4 rounded-lg shadow-lg">
+		<div className="bg-white p-4 rounded-lg shadow-lg w-full">
 			<div className="text-lg font-semibold mb-4">비밀번호 변경</div>
 			<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
 				<div className="text-base font-semibold mt-2 mb-1">새 비밀번호</div>

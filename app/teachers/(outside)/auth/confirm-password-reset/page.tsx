@@ -2,7 +2,7 @@ import Link from "next/link"
 
 export default function ConfirmPasswordReset() {
 	return (
-		<div className="w-full flex flex-col justify-center items-center m-auto">
+		<div className="">
 			<div className="p-4 rounded-lg flex flex-col justify-center items-center bg-white shadow-lg">
 				<div className="text-xl font-semibold mb-2">비밀번호 초기화</div>
 				<div>비밀번호 초기화 메일을 확인해주세요.</div>
