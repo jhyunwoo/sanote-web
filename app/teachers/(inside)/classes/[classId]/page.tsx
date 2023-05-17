@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import pb from "@/lib/pocketbase"
-import TeachersProtectedPage from "@/app/components/TeachersProtectedPage"
+
 import { TrashIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
 
@@ -59,9 +59,7 @@ export default function ClassDetail() {
 	}, [params.classId])
 
 	return (
-		<div className="w-full min-h-screen  p-4 pt-16 flex flex-col">
-			<TeachersProtectedPage />
-
+		<div className="w-full flex flex-col">
 			<div className="mt-2">
 				<div className="text-xl font-bold">
 					{classInfo?.title} {classInfo?.pac}팩

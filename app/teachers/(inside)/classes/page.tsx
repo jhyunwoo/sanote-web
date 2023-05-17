@@ -1,11 +1,9 @@
 import Link from "next/link"
 import ClassList from "./ClassList"
-import TeachersProtectedPage from "@/app/components/TeachersProtectedPage"
 
 export default async function Classes() {
 	return (
-		<div className="w-full min-h-screen  pt-20 p-4 flex flex-col item">
-			<TeachersProtectedPage />
+		<div className="flex flex-col">
 			<Link
 				href={"/teachers/classes/create-class"}
 				className="bg-orange-400 hover:0 transition duration-200 p-2 rounded-md text-white font-semibold text-center my-1"

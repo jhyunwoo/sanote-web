@@ -2,7 +2,7 @@ import Link from "next/link"
 
 export default function ConfirmPasswordSuccess() {
 	return (
-		<div className="bg-white p-4 rounded-lg shadow-lg flex flex-col w-full">
+		<div className="bg-white p-4 rounded-lg shadow-lg flex flex-col w-5/6">
 			<div className="text-lg font-semibold">이메일 인증 완료</div>
 			<div>웹으로 돌아가 로그인을 진행해주세요.</div>
 			<Link

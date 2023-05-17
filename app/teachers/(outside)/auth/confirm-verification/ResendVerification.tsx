@@ -19,7 +19,7 @@ export default function ResendVerification() {
 		}
 	}
 	return (
-		<div className="text-orange-400 hover:text-orange-500 transition duration-200 p-2 px-6 rounded-full mt-4 text-sm">
+		<div className="text-orange-400 hover:text-orange-500 transition duration-200 p-2 px-6 rounded-full mt-4 text-sm font-medium">
 			<button onClick={resend}>인증 메일 다시 보내기</button>
 		</div>
 	)

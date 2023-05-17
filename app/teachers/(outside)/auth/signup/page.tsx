@@ -3,7 +3,7 @@ import Link from "next/link"
 
 export default function TeachersSignUp() {
 	return (
-		<div className="m-auto flex justify-center items-center flex-col w-full">
+		<div className="w-5/6 flex flex-col items-center justify-center">
 			<div className="flex flex-col justify-center items-center bg-white p-4 rounded-lg shadow-lg w-full">
 				<div className="m-4 text-xl font-bold">회원가입</div>
 				<SignUpInput />

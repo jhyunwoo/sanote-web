@@ -22,8 +22,8 @@ export default function RequestPasswordReset() {
 	}
 
 	return (
-		<div className="m-auto flex flex-col justify-center items-center w-full">
-			<div className="flex flex-col p-4 rounded-lg bg-white items-center w-5/6">
+		<div className="w-5/6">
+			<div className="flex flex-col p-4 rounded-lg bg-white items-center">
 				<div className="text-xl font-semibold m-4">비밀번호 초기화 요청</div>
 				<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
 					<div className="text-base font-semibold">이메일</div>

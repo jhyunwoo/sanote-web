@@ -29,7 +29,7 @@ export default function NoteDetail() {
 	}, [param.noteId])
 
 	return (
-		<div className="w-full min-h-screen  p-4 pt-16 flex flex-col">
+		<div className="w-full flex flex-col">
 			<div className="flex flex-col  w-full py-4">
 				<div className="text-xl font-bold"> {note?.title}</div>
 				<div className="ml-auto">{getDate(note?.created)}</div>

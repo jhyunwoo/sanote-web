@@ -43,12 +43,12 @@ export default function Input() {
 				<div className="font-semibold text-lg mb-2">수업명</div>
 				<input
 					{...register("title", { required: { value: true, message: "수업명을 입력하세요." } })}
-					className="p-2  outline-none rounded-lg focus:ring-2 ring-orange-400"
+					className="p-2  outline-none rounded-lg focus:ring-offset-2 ring-orange-400 ring-2 transition duration-200"
 				/>
 				<div className="font-semibold text-lg my-2">Pac</div>
 				<input
 					{...register("pac", { required: { value: true, message: "팩을 입력하세요." } })}
-					className="p-2  outline-none rounded-lg focus:ring-2 ring-orange-400"
+					className="p-2  outline-none rounded-lg focus:ring-offset-2 ring-orange-400 ring-2 transition duration-200"
 				/>
 				<select
 					{...register("year", { required: { value: true, message: "개설 연도를 입력하세요." } })}
