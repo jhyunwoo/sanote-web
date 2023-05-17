@@ -1,5 +1,6 @@
 import "./globals.css"
 import Recoil from "./components/Recoil"
+import Loading from "./components/Loading"
 
 export const metadata = {
 	title: "Sanote",
@@ -233,7 +234,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="kr">
 			<body className="scrollbar-hide">
-				<Recoil>{children}</Recoil>
+				<Recoil>
+					<Loading />
+					{children}
+				</Recoil>
 			</body>
 		</html>
 	)

@@ -18,24 +18,41 @@ export default function TeachersProtectedPage() {
 			router.replace("/")
 		}
 	}, [router, user])
+
 	useEffect(() => {
 		async function getUserDate() {
 			if (pb.authStore.model?.id) {
 				if (user.id === null) {
-					const record = await pb.collection("users").getOne(pb.authStore.model?.id)
-					setUser({
-						id: record.id,
-						username: record.username,
-						email: record.email,
-						name: record.name,
-						avatar: record.avatar,
-						type: record.type,
-						studentId: record.studentId,
-						year: record.year,
-						class: record.class,
-						department: record.department,
-						valid: record.valid,
-					})
+					try {
+						const record = await pb.collection("users").getOne(pb.authStore.model?.id)
+						setUser({
+							id: record.id,
+							username: record.username,
+							email: record.email,
+							name: record.name,
+							avatar: record.avatar,
+							type: record.type,
+							studentId: record.studentId,
+							year: record.year,
+							class: record.class,
+							department: record.department,
+							valid: record.valid,
+						})
+					} catch {
+						setUser({
+							id: null,
+							username: null,
+							email: null,
+							name: null,
+							avatar: null,
+							type: null,
+							studentId: null,
+							year: null,
+							class: null,
+							department: null,
+							valid: null,
+						})
+					}
 				}
 			}
 		}

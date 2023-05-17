@@ -39,7 +39,19 @@ export default function ProtectedPage() {
 							valid: authData?.valid,
 						})
 					} catch (e) {
-						console.log(e)
+						setUser({
+							id: null,
+							username: null,
+							email: null,
+							name: null,
+							avatar: null,
+							type: null,
+							studentId: null,
+							year: null,
+							class: null,
+							department: null,
+							valid: null,
+						})
 					}
 				}
 			}

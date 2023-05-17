@@ -1,3 +1,5 @@
+import Layout from "../components/Layout"
+
 export const metadata = {
 	title: "Sanote for Teachers",
 	description: "CNSA Note system",
@@ -227,5 +229,5 @@ export const metadata = {
 }
 
 export default function TeachersLayout({ children }: { children: React.ReactNode }) {
-	return <div className="bg-slate-50">{children}</div>
+	return <Layout>{children}</Layout>
 }

@@ -7,8 +7,7 @@ import pb from "@/lib/pocketbase"
 import { useRouter } from "next/navigation"
 import { MagnifyingGlassIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { loading } from "@/lib/recoil"
-import { useRecoilState } from "recoil"
-import Loading from "../components/Loading"
+import { useSetRecoilState } from "recoil"
 
 type Inputs = {
 	search: string
@@ -44,7 +43,7 @@ export default function Input() {
 
 	const [receiver, setReceiver] = useState<any[]>([])
 
-	const [isLoading, setIsLoading] = useRecoilState(loading)
+	const setIsLoading = useSetRecoilState(loading)
 
 	const onSubmit: SubmitHandler<Inputs> = async (data) => {
 		const users = await pb.collection("users").getFullList({
@@ -104,7 +103,6 @@ export default function Input() {
 
 	return (
 		<div className="w-full flex flex-col">
-			{isLoading ? <Loading /> : ""}
 			<form onSubmit={handleSubmit(onSubmit)} className="flex my-2 space-x-2 w-full justify-between">
 				<input
 					{...register("search")}

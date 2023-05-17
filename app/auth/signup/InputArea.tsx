@@ -3,7 +3,7 @@
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import pb from "@/lib/pocketbase"
-import { useRecoilState, useSetRecoilState } from "recoil"
+import { useSetRecoilState } from "recoil"
 import { loading, userInfo } from "@/lib/recoil"
 import Link from "next/link"
 
@@ -26,8 +26,7 @@ export default function SignUpInputArea() {
 	} = useForm<Inputs>()
 	const router = useRouter()
 	const setUser = useSetRecoilState(userInfo)
-	const [isLoading, setIsLoading] = useRecoilState(loading)
-
+	const setIsLoading = useSetRecoilState(loading)
 	const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
 		if (data.password === data.passwordConfirm) {
 			setIsLoading(true)
