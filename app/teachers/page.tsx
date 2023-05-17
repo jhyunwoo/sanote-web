@@ -1,5 +1,5 @@
 import Link from "next/link"
-import CenterLayout from "../components/CenterLayout"
+import CenterLayout from "@/app/components/CenterLayout"
 
 export default function Home() {
 	return (

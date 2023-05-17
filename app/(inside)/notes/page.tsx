@@ -1,6 +1,6 @@
-import ProtectedPage from "../components/ProtectedPage"
-import HeadBar from "../components/HeadBar"
-import BottomBar from "../components/BottomBar"
+import ProtectedPage from "@/app/components/ProtectedPage"
+import HeadBar from "@/app/components/HeadBar"
+import BottomBar from "@/app/components/BottomBar"
 import NoteList from "./NoteList"
 
 export default function Home() {

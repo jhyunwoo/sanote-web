@@ -1,4 +1,4 @@
-import ClassList from "@/app/classes/ClassList"
+import ClassList from "./ClassList"
 import Link from "next/link"
 
 export default function Classes() {

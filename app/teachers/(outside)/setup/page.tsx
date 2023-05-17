@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import Push from "../../../components/Push"
+import Push from "@/app/components/Push"
 import Link from "next/link"
 import { useRecoilState } from "recoil"
 import { isNoti } from "@/lib/recoil"

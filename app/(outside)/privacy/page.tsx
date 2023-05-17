@@ -1,4 +1,4 @@
-import Layout from "../components/Layout"
+import Layout from "@/app/components/Layout"
 
 function Paragraph({ children }: { children: React.ReactNode }) {
 	return <div className="p-4 rounded-lg bg-white my-2">{children}</div>

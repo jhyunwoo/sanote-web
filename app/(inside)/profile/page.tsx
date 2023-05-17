@@ -1,4 +1,4 @@
-import ProtectedPage from "../components/ProtectedPage"
+import ProtectedPage from "@/app/components/ProtectedPage"
 import UserInfo from "./UserInfo"
 
 export default function Profile() {

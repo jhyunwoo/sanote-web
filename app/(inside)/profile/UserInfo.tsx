@@ -4,7 +4,7 @@ import pb from "@/lib/pocketbase"
 import { userInfo } from "@/lib/recoil"
 import { useRouter } from "next/navigation"
 import { useRecoilState } from "recoil"
-import ProfilePush from "../components/ProfilePush"
+import ProfilePush from "@/app/components/ProfilePush"
 
 export default function UserInfo() {
 	const [user, setUser] = useRecoilState(userInfo)

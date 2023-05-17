@@ -1,7 +1,7 @@
 import Layout from "@/app/components/Layout"
 import HeadBar from "@/app/components/HeadBar"
 import BottomBar from "@/app/components/BottomBar"
-import ProtectedPage from "../components/ProtectedPage"
+import ProtectedPage from "@/app/components/ProtectedPage"
 
 export default function InsideLayout({ children }: { children: React.ReactNode }) {
 	return (
