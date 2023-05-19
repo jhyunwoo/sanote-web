@@ -42,6 +42,7 @@ export default function Input() {
 	})
 
 	const [receiver, setReceiver] = useState<any[]>([])
+	const [type, setType] = useState<string>()
 
 	const setIsLoading = useSetRecoilState(loading)
 
@@ -59,7 +60,7 @@ export default function Input() {
 
 	const onSubmitNote: SubmitHandler<NoteType> = async (data) => {
 		setIsLoading(true)
-		if (receiver?.length > 0) {
+		if (receiver?.length > 0 && type) {
 			let pushInfos: any[] = []
 			for (let i = 0; i < receiver?.length; i++) {
 				for (let j = 0; j < receiver[i].expand["pushInfos(user)"]?.length; j++) {
@@ -77,6 +78,7 @@ export default function Input() {
 				content: data.content,
 				sender: pb.authStore.model?.id,
 				receiver: receiverInfo,
+				type: type,
 			}
 
 			const record = await pb.collection("notes").create(noteData)
@@ -85,12 +87,17 @@ export default function Input() {
 				users: pushInfos,
 			})
 			router.push("/notes")
+		} else {
+			alert("쪽지 유형을 선택하세요.")
 		}
 		setIsLoading(false)
 	}
 
 	function addReceiver(data: any) {
-		if (!receiver.includes(data)) {
+		if (receiver.length !== 0) {
+			alert("쪽지는 한 번에 한 명에게만 보낼 수 있습니다.")
+		}
+		if (!receiver.includes(data) && receiver.length === 0) {
 			setReceiver([...receiver, data])
 		}
 	}
@@ -103,6 +110,41 @@ export default function Input() {
 
 	return (
 		<div className="w-full flex flex-col">
+			<div className="flex justify-around w-full">
+				<button
+					onClick={() => setType("emergency")}
+					className={`${
+						type === "emergency" ? "bg-red-400 text-white" : "hover:bg-red-200 bg-red-50"
+					} p-1 px-4 rounded-lg transition duration-200 text-base`}
+				>
+					긴급
+				</button>
+				<button
+					onClick={() => setType("announcement")}
+					className={`${
+						type === "announcement" ? "bg-orange-400 text-white" : "hover:bg-orange-200 bg-orange-50"
+					} p-1 px-4 rounded-lg transition duration-200 text-base`}
+				>
+					공지
+				</button>
+				<button
+					onClick={() => setType("task")}
+					className={`${
+						type === "task" ? "bg-green-400 text-white" : "hover:bg-green-200 bg-green-50"
+					} p-1 px-4 rounded-lg transition duration-200 text-base`}
+				>
+					과제
+				</button>
+				<button
+					onClick={() => setType("individual")}
+					className={`${
+						type === "individual" ? "bg-blue-400 text-white" : "hover:bg-blue-200 bg-blue-50"
+					} p-1 px-4 rounded-lg transition duration-200 text-base`}
+				>
+					개인
+				</button>
+			</div>
+			<div className="font-semibold text-base mt-4">수신자 검색</div>
 			<form onSubmit={handleSubmit(onSubmit)} className="flex my-2 space-x-2 w-full justify-between">
 				<input
 					{...register("search")}
